@@ -23,6 +23,17 @@ app.use("/api/users", userRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/videos", videoRoutes);
 
+// middleware
+app.use((err,req,res,next)=>{
+    const status = err.status || 500;
+    const message = err.message;
+
+    return res.status(status).json({
+        success: false,
+        status,
+        message,
+    });
+});
 
 mongoose.connect(process.env.MONGO_URI)
 .then(()=>{
