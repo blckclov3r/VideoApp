@@ -35,7 +35,6 @@ export const signin = async (req,res,next)=>{
         }
     
        const token = jwt.sign({id: user._id},process.env.JWT);
-   
        // taking out the password 
        const {password,...others} = user._doc;
 

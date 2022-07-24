@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const VideoSchema = new mongoose.Schema({
-    useId: {
+    userId: {
         type: String,
         required: true,
     },

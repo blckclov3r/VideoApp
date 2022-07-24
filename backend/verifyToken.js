@@ -4,7 +4,7 @@ import { createError } from './error.js';
 export const verifyToken = (req,res,next)=>{
 
     const token = req.cookies.access_token;
-
+    // console.log('REQ COOKIES',req.cookies)
 
     if(!token){
         return next(createError(401,'You are not auntheticated'));
@@ -15,7 +15,9 @@ export const verifyToken = (req,res,next)=>{
         if(err){
             return next(createError(403,'Your token is not valid!!!')); 
         }
+
         req.user =  user;
+
         // console.log('req.user ====> ',req.user)
         // console.log('user ====> ',user)
         next()
