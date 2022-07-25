@@ -1,5 +1,6 @@
 import { createError } from "../error.js";
 import Video from "../models/Video.js";
+import User from "../models/User.js";
 
 export const addVideo = async(req,res,next)=>{
  try {
@@ -76,7 +77,7 @@ export const trendVideo = async(req,res,next)=>{
 
 export const randomVideo = async(req,res,next)=>{
     try {
-       const videos = await Video.aggregate([{$sample: {size: 40}}])
+       const videos = await Video.aggregate([{$sample: {size: 1}}])
        res.status(200).json(videos);
     } catch (error) {
        next(error);
@@ -89,15 +90,41 @@ export const subscribedVideo = async(req,res,next)=>{
        const subscribedChannels = user.subscribedUsers;
 
     //    finding not one channel but all channels
-       const list = Promise.all(
+       const list = await Promise.all(
         subscribedChannels.map(channelId => {
             return Video.find({userId: channelId})
         })
        )
-       res.status(200).json(list);
+
+      //  res.status(200).json(list); 
+      res.status(200).json(list.flat().sort((a,b)=>b.createdAt - a.createdAt)); 
     } catch (error) {
+       console.log('error => ',error);
        next(error);
     }   
+}
+
+export const getByTagVideo = async(req,res,next)=>{
+   //?tags=js,sql,cpp
+   const tags = req.query.tags.split(',') 
+   // console.log(tags)
+   try {
+      const videos = await Video.find({tags: {$in: tags}}).limit(20);
+      res.status(200).json(videos);
+   } catch (error) {
+      next(error);
+   }   
+}
+
+export const searchVideo = async(req,res,next)=>{
+   const query = req.query.q
+   try {
+      // regex search wherever inside in the query  while $options ignore uppercase and lowercase
+      const videos = await Video.find({title: {$regex: query, $options: "i"}}).limit(20);
+      res.status(200).json(videos);
+   } catch (error) {
+      next(error);
+   }   
 }
 
    
