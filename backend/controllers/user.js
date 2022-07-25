@@ -1,6 +1,6 @@
 import { createError } from "../error.js"
 import User from "../models/User.js";
-
+import Video from "../models/Video.js";
 
 
 export const updateUser = async(req,res,next)=>{
@@ -71,17 +71,31 @@ export const unsubscribeUser = async(req,res)=>{
     }
 }
 
-export const likeUserVideo = async(req,res)=>{
+export const likeUserVideo = async(req,res,next)=>{
     try {
-        
+        const id = req.user.id;
+        const videoId = req.params.videoId;
+        await Video.findByIdAndUpdate(videoId,{
+            // id push only once, unlike $push can add multiple id
+           
+            $pull: {dislikes: id}
+        });
+        res.status(200).json("The video has been liked")
     } catch (error) {
         next(error);
     }
 }
 
-export const dislikeUserVideo = async(req,res)=>{
+export const dislikeUserVideo = async(req,res,next)=>{
     try {
-    
+        const id = req.user.id;
+        const videoId = req.params.videoId;
+        await Video.findByIdAndUpdate(videoId,{
+            // id push only once, unlike $push can add multiple id
+            $addToSet: {dislikes: id},
+            $pull: {likes: id}
+        });
+        res.status(200).json("The video has been disliked")
     } catch (error) {
         next(error);
     }
