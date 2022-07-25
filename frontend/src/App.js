@@ -4,9 +4,9 @@ import Menu from './components/Menu';
 import Navbar from './components/Navbar';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from './components/Home';
-import Video from './components/Video';
-import Signin from './components/Signin';
+import Home from './pages/Home';
+import Video from './pages/Video';
+import Signin from './pages/Signin';
 import { darkTheme,lightTheme } from './utils/Theme';
 import { useState } from 'react';
 

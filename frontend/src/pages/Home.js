@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import Card from './Card'
+import Card from '../components/Card'
 
 const Container = styled.div`
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-wrap: wrap;
+    flex: 1;
 `
 
 export default function Home() {
@@ -27,8 +28,7 @@ export default function Home() {
         <Card />
         <Card />
         <Card />
-        <Card />
-        <Card />
+    
     </Container>
   )
 }

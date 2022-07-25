@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   padding: 0px 20px;
   box-shadow: 0 .125rem 0 rgba(0,0,0,.075)!important;
   position: relative;
+  
 `;
 
 const Search = styled.div`

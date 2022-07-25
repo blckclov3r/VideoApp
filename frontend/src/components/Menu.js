@@ -30,6 +30,7 @@ const Container = styled.div`
   font-size: 14px;
   position: sticky;
   top: 0;
+  height: 100%;
   
 `;
 const Wrapper = styled.div`
