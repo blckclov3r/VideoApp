@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { loginFailure, loginStart, loginSuccess } from "../features/userSlice";
 
 const Container = styled.div`
   display: flex;
@@ -70,14 +72,18 @@ const SignIn = () => {
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
 
+  const dispatch = useDispatch();
+
   const handleSignin = async()=>{
+    dispatch(loginStart())
     try {
       const res = await axios.post("/auth/signin",{
         name,password
       })
       console.log(res?.data);
+      dispatch(loginSuccess(res?.data));
     } catch (error) {
-      
+      dispatch(loginFailure());
     }
   }
 

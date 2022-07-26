@@ -5,8 +5,8 @@ const initialState = {
     loading: false,
     error: false,
 };
-const namespace = 'user';
-export const userSlice = createSlice({
+const namespace = 'video';
+export const videoSlice = createSlice({
     initialState,
     name: namespace,
     reducers: {
@@ -27,6 +27,6 @@ export const userSlice = createSlice({
     }
 });
 
-export const {loginStart, loginSuccess,loginFailure,logout} = userSlice.actions;
-export default userSlice.reducer
+export const {loginStart, loginSuccess,loginFailure,logout} = videoSlice.actions;
+export default videoSlice.reducer
 

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import Card from '../components/Card'
+import Card from "../components/Card";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import styled from "styled-components";
+
 const Container = styled.div`
     display: flex;
     justify-content: space-between;
@@ -20,7 +21,7 @@ export default function Home({type}) {
     }
     fetchVideos();
   }, [type]);
-  // console.log(videos)
+   console.log(videos)
 
   return (
     <Container>

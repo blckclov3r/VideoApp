@@ -1,8 +1,10 @@
-import React from 'react'
-import styled from 'styled-components';
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../features/userSlice";
 
 const Container = styled.div`
   position: sticky;
@@ -57,7 +59,25 @@ const Button = styled.button`
   gap: 5px;
 `;
 
+const User = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weigth: 500;
+  color: ${({theme})=>theme.text}
+`
+
+const Avatar = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #999;
+`
+
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const user = useSelector(state=> state.user.currentUser);
+  console.log('currentUser',user)
   return (
     <Container>
       <Wrapper>
@@ -65,12 +85,23 @@ export default function Navbar() {
           <Input placeholder='Search' />
           <SearchOutlinedIcon />
         </Search>
-        <Link to="signin" style={{ textDecoration: "none" }}>
-          <Button>
+       {
+        user ? (
+          <User>
+             <VideoCallOutlinedIcon />
+             <Avatar />
+             {user.name}
+          </User>
+
+        ) : (
+          <Link to="signin" style={{ textDecoration: "none" }}>
+          <Button onClick={()=>dispatch(logout())}>
             <AccountCircleOutlinedIcon />
-            SIGN IN
+            {user ? 'SIGN OUT' : 'SIGN IN'}
           </Button>
         </Link>
+        )
+       }
       </Wrapper>
     </Container>
   )

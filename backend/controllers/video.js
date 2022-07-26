@@ -1,6 +1,6 @@
-import { createError } from "../error.js";
-import Video from "../models/Video.js";
 import User from "../models/User.js";
+import Video from "../models/Video.js";
+import { createError } from "../error.js";
 
 export const addVideo = async(req,res,next)=>{
  try {
@@ -95,7 +95,6 @@ export const subscribedVideo = async(req,res,next)=>{
             return Video.find({userId: channelId})
         })
        )
-
       //  res.status(200).json(list); 
       res.status(200).json(list.flat().sort((a,b)=>b.createdAt - a.createdAt)); 
     } catch (error) {
