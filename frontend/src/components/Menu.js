@@ -20,13 +20,13 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
 
 
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Container = styled.div`
   flex: 1;
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-  background-color: ${({theme})=>theme.bg};
-  color: ${({theme})=>theme.text};
+  background-color: ${({ theme }) => theme.bg};
+  color: ${({ theme }) => theme.text};
   font-size: 14px;
   position: sticky;
   top: 0;
@@ -91,30 +91,39 @@ const Title = styled.h2`
 
 
 
-export default function Menu  ({ darkMode, setDarkMode }){
+export default function Menu({ darkMode, setDarkMode }) {
   return (
     <Container>
-        <Wrapper>
+      <Wrapper>
 
-        <Link to="/" style={{textDecoration: 'none', color: 'inherit'}}>
+        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Logo>
             <Img src={videAppImg} alt="logo" />
             <h2>VideoApp</h2>
           </Logo>
-          </Link>
+        </Link>
 
+        <Link to="/" style={{ textDecoration: "none",color: 'inherit' }}>
           <Item>
-          <HomeIcon />
-          Home
-        </Item>
+            <HomeIcon />
+            Home
+          </Item>
+        </Link>
+
+        <Link to="/trends" style={{ textDecoration: "none",color: 'inherit' }}>
         <Item>
           <ExploreOutlinedIcon />
           Explore
         </Item>
+        </Link>
+
+        <Link to="/subscriptions" style={{ textDecoration: "none",color: 'inherit' }}>
         <Item>
           <SubscriptionsOutlinedIcon />
           Subscriptions
         </Item>
+        </Link>
+
         <Hr />
         <Item>
           <VideoLibraryOutlinedIcon />
@@ -127,7 +136,7 @@ export default function Menu  ({ darkMode, setDarkMode }){
         <Hr />
         <Login>
           Sign in to like videos, comment, and subscribe.
-          <Link to="signin" style={{textDecoration:"none"}}>
+          <Link to="signin" style={{ textDecoration: "none" }}>
             <Button>
               <AccountCircleOutlinedIcon />
               SIGN IN
@@ -178,7 +187,7 @@ export default function Menu  ({ darkMode, setDarkMode }){
           {darkMode ? "Light" : "Dark"} Mode
         </Item>
 
-        </Wrapper>
+      </Wrapper>
     </Container>
   )
 }

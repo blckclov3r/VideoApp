@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
+import { formatDistanceToNow } from 'date-fns'
+import axios from 'axios'
+
 
 const Container = styled.div`
     width: 300px;
@@ -50,17 +53,31 @@ const Info = styled.div`
 `;
 
 
-export default function Card() {
+export default function Card({type,video}) {
+
+  const [channel,setChannel] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () =>{
+      const response = await axios.get(`/users/find/${video?.userId}`);
+      setChannel(response?.data);
+    }
+    fetchUser();
+  }, [video?.userId]);
+
+  // console.log(channel)
+  // console.log(video)
   return (
     <Link to="/video" style={{textDecoration: 'none'}}>
-        <Container>
-                <Image src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640" />
-                <Details>
+        <Container type={type}>
+                {/* <Image src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640" /> */}
+                <Image src={video?.imgUrl} />
+                <Details type={type}>
                     <ChannelImage />
                     <Texts>
-                <Title>Test Video</Title>
-                <ChannelName>Blckclov3r</ChannelName>
-                <Info>660,908 views • 1 day ago</Info>
+                <Title>{video?.title}</Title>
+                <ChannelName>{channel?.name}</ChannelName>
+                <Info>{video?.views} views •  {formatDistanceToNow(new Date(video?.createdAt), { addSuffix: true })}</Info>
             </Texts>
                 </Details>
         </Container>
