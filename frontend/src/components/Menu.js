@@ -84,7 +84,8 @@ const Title = styled.h2`
   font-size: 14px;
   font-weight: 500;
   color: #aaaaaa;
-  margin-bottom: 20px;
+  margin-bottom: .7rem;
+  padding: 0px 1rem;
 `;
 
 

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { signInWithPopup } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginStart, loginSuccess } from "../features/userSlice";
+import { auth, provider } from "../firebase";
 
 const Container = styled.div`
   display: flex;
@@ -87,6 +89,10 @@ const SignIn = () => {
     }
   }
 
+  const signInWithGoogle =  () =>{
+
+  }
+
   const handleSignup = async() => {
 
   }
@@ -98,6 +104,8 @@ const SignIn = () => {
         <Input placeholder="username" value={name} onChange={(e)=>setName(e.target.value)} />
         <Input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="password" />
         <Button onClick={handleSignin}>Sign in</Button>
+        <Title>or</Title>
+        <Button onClick={signInWithGoogle}>Signin with Google</Button>
         <Title>or</Title>
         <Input placeholder="username" value={name} onChange={(e)=>setName(e.target.value)}  />
         <Input placeholder="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
