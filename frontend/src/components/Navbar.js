@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../features/userSlice";
+import { Upload } from "./Upload";
+import { useState } from "react";
 
 const Container = styled.div`
   position: sticky;
@@ -74,12 +76,23 @@ const Avatar = styled.img`
   background-color: #999;
 `
 
+
+
 export default function Navbar() {
+
+  const [open,setOpen] = useState(false);
+
   const dispatch = useDispatch();
   const user = useSelector(state=> state.user.currentUser);
   // console.log('currentUser',user)
+
+  const handleVideoCall = () =>{
+    setOpen(true)
+  }
+
   return (
-    <Container>
+    <>
+      <Container>
       <Wrapper>
         <Search>
           <Input placeholder='Search' />
@@ -88,7 +101,7 @@ export default function Navbar() {
        {
         user ? (
           <User>
-             <VideoCallOutlinedIcon />
+             <VideoCallOutlinedIcon  onClick={handleVideoCall} />
              <Avatar src={user.img}  />
              {user.name}
           </User>
@@ -104,5 +117,10 @@ export default function Navbar() {
        }
       </Wrapper>
     </Container>
+
+    {
+      open && <Upload setOpen={setOpen} />
+    }
+    </>
   )
 }
