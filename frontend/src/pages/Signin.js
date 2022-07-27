@@ -89,8 +89,22 @@ const SignIn = () => {
     }
   }
 
-  const signInWithGoogle =  () =>{
+  const signInWithGoogle =   () =>{
+    dispatch(loginStart());
+     signInWithPopup(auth,provider).then((result)=>{
 
+      axios.post("/auth/google",{
+        name: result.user.displayName,
+        email: result.user.email,
+        img: result.user.photoURL
+      }).then(res=>{
+        dispatch(loginSuccess(res?.data));
+      })
+
+    }).catch((err)=>{
+      console.log(err);
+      dispatch(loginFailure())
+    })
   }
 
   const handleSignup = async() => {
@@ -100,7 +114,7 @@ const SignIn = () => {
     <Container>
       <Wrapper>
         <Title>Sign in</Title>
-        <SubTitle>to continue to LamaTube</SubTitle>
+        <SubTitle>to continue to VideoApp</SubTitle>
         <Input placeholder="username" value={name} onChange={(e)=>setName(e.target.value)} />
         <Input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="password" />
         <Button onClick={handleSignin}>Sign in</Button>

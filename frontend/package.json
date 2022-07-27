@@ -1,5 +1,5 @@
 {
-  "proxy": "http://127.0.0.1:5000/api",
+  "proxy": "http://0.0.0.1:8000/api/",
   "name": "video_app",
   "version": "0.1.0",
   "private": true,
@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "date-fns": "^2.29.1",
+    "dotenv": "^16.0.1",
     "firebase": "^9.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-import styled from 'styled-components'
-import { formatDistanceToNow } from 'date-fns'
-import axios from 'axios'
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import styled from "styled-components";
+import { formatDistanceToNow } from "date-fns";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
     width: 300px;
@@ -68,7 +67,7 @@ export default function Card({type,video}) {
   // console.log(channel)
   // console.log(video)
   return (
-    <Link to="/video" style={{textDecoration: 'none'}}>
+    <Link to={`/video/${video._id}`} style={{textDecoration: 'none'}}>
         <Container type={type}>
                 {/* <Image src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640" /> */}
                 <Image src={video?.imgUrl} />

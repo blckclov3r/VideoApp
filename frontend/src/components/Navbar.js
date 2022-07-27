@@ -77,7 +77,7 @@ const Avatar = styled.img`
 export default function Navbar() {
   const dispatch = useDispatch();
   const user = useSelector(state=> state.user.currentUser);
-  console.log('currentUser',user)
+  // console.log('currentUser',user)
   return (
     <Container>
       <Wrapper>
@@ -89,7 +89,7 @@ export default function Navbar() {
         user ? (
           <User>
              <VideoCallOutlinedIcon />
-             <Avatar />
+             <Avatar src={user.img}  />
              {user.name}
           </User>
 

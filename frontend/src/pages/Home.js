@@ -21,7 +21,7 @@ export default function Home({type}) {
     }
     fetchVideos();
   }, [type]);
-   console.log(videos)
+  //  console.log(videos)
 
   return (
     <Container>

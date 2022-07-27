@@ -1,8 +1,7 @@
-import mongoose from "mongoose";
 import User from "../models/User.js";
-import bcrypt from 'bcryptjs'
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { createError } from "../error.js";
-import jwt from 'jsonwebtoken';
 
 export const signup = async (req,res,next)=>{
     const {password} = req.body;
@@ -42,6 +41,33 @@ export const signin = async (req,res,next)=>{
         httpOnly: true
        }).status(200).json(others);
      
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const googleAuth = async (req,res,next)=>{
+    try {
+        const user = await User.findOne({email: req.body.email})
+        console.log('google auth',user)
+        if(user){
+            const token = jwt.sign({id: user._id},process.env.JWT);
+            res.cookie("access_token",token,{
+                httpOnly: true
+            }).status(200).json(user);
+            // console.log('user',user)
+        }else{
+            const newUser = new User({
+                ...req.body,
+                fromGoogle: true
+            });
+            const savedUser = await newUser.save();
+            // console.log('savedUser',savedUser)
+            const token = jwt.sign({id: savedUser._id},process.env.JWT);
+            res.cookie("access_token",token,{
+                httpOnly: true
+            }).status(200).json(savedUser);
+        }
     } catch (error) {
         next(error)
     }
