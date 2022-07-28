@@ -3,7 +3,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../features/userSlice";
 import { Upload } from "./Upload";
 import { useState } from "react";
@@ -11,9 +11,7 @@ import { useState } from "react";
 const Container = styled.div`
   position: sticky;
   top: 0;
-  background-color: ${({ theme }) => theme.bgLighter};
   height: 56px;
-  
 `;
 
 const Wrapper = styled.div`
@@ -22,9 +20,8 @@ const Wrapper = styled.div`
   justify-content: flex-end;
   height: 100%;
   padding: 0px 20px;
-  box-shadow: 0 .125rem 0 rgba(0,0,0,.075)!important;
   position: relative;
-  
+  background-color: ${({ theme }) => theme.bgLighter};
 `;
 
 const Search = styled.div`
@@ -39,6 +36,7 @@ const Search = styled.div`
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
+  color: ${({ theme }) => theme.text};
 `;
 
 const Input = styled.input`
@@ -81,6 +79,8 @@ const Avatar = styled.img`
 export default function Navbar() {
 
   const [open,setOpen] = useState(false);
+  const [inputQuery,setInputQuery] = useState("");
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const user = useSelector(state=> state.user.currentUser);
@@ -95,8 +95,8 @@ export default function Navbar() {
       <Container>
       <Wrapper>
         <Search>
-          <Input placeholder='Search' />
-          <SearchOutlinedIcon />
+          <Input placeholder='Search' value={inputQuery} onChange={(e)=>setInputQuery(e.target.value)} />
+          <SearchOutlinedIcon onClick={()=>{navigate(`/search?q=${inputQuery}`)}} />
         </Search>
        {
         user ? (

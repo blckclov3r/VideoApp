@@ -14,6 +14,7 @@ import { useLocation } from "react-router-dom";
 import { dislike, fetchSuccess, like } from "../features/videoSlice";
 import { formatDistanceToNow } from "date-fns";
 import { subscribe } from "../features/userSlice";
+import Recommendation from "../components/Recommendation";
 
 const Container = styled.div`
   display: flex;
@@ -61,9 +62,8 @@ const Hr = styled.hr`
   border: 0.5px solid ${({ theme }) => theme.soft};
 `;
 
-const Recommendation = styled.div`
-  flex: 1;
-`;
+
+
 const Channel = styled.div`
   display: flex;
   justify-content: space-between;
@@ -178,7 +178,7 @@ const Video = () => {
       <Content>
         <VideoWrapper>
           
-          <VideoFrame src={currentVideo?.videoUrl} />
+          <VideoFrame src={currentVideo?.videoUrl} controls />
 
 
         </VideoWrapper>
@@ -219,21 +219,7 @@ const Video = () => {
         <Hr />
         <Comments videoId={currentVideo?._id} />
       </Content>
-      <Recommendation>
-        {/* <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/> */}
-      </Recommendation>
+      <Recommendation tags={currentVideo.tags} />
     </Container>
   );
 };
