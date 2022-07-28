@@ -8,7 +8,16 @@ import authRoutes from './routes/auth.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
+import path from 'path';
+import {fileURLToPath} from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+
+// 👇️ "/home/john/Desktop/javascript"
+const __dirname = path.dirname(__filename);
+
 dotenv.config();
+
 const app = express();
 app.use(cors());
 
@@ -40,7 +49,7 @@ app.use((err,req,res,next)=>{
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static(path.join(__dirname,'../frontend/build')))
     app.get('*',(req,res)=>{
-        return res.sendFile(    path.resolve(__dirname, '../', 'frontend', 'build', 'index.html'))
+        return res.sendFile(path.resolve(__dirname, '../', 'frontend', 'build', 'index.html'))
     })
 }else{
     app.get('/',(req,res)=>res.send('Please set to production'))

@@ -26,8 +26,8 @@ export default function Home({type}) {
 
   return (
     <Container>
-       {
-        videos?.map((video)=>(
+       { 
+       videos &&  videos?.map((video)=>(
           <Card video={video} type={type}  key={video?._id} />
         ))
        }
