@@ -37,26 +37,33 @@ const Text = styled.span`
 `;
 
 const Comment = ({comment}) => {
-  const [channel,setChannel] = useState({})
+  const [channel,setChannel] = useState(null)
   useEffect(()=>{
     const fetchComment = async () =>{
-      const res = await axios.get(`/users/find/${comment.userId}`).then(res=>console.log(res?.data))
-      setChannel(res?.data)
+      
+     await axios.get(`/users/find/${comment?.userId}`).then(res=>setChannel(res?.data))
+   
     }
     fetchComment();
   },[comment.userId])
+
+
+
   return (
-    <Container>
-      <Avatar src={channel?.img} />
+
+      <Container>
+      <Avatar src={channel?.img ? channel?.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
       <Details>
         <Name>
           {channel?.name} <Date>1 day ago</Date>
         </Name>
         <Text>
-          {comment.desc}
+          {comment?.desc}
         </Text>
       </Details>
     </Container>
+  
+ 
   );
 };
 

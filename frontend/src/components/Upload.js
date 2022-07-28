@@ -17,19 +17,20 @@ const Container = styled.div`
     align-items: center;
     display: flex;
     justify-content: center;
+    
 `
 
 const Wrapper = styled.div`
     width: 600px;
     height: 600px;
-    background: ${({ theme }) => theme.bgLighter};
+    background: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.text};
     padding: 1.4rem;
     display: flex;
     flex-direction: column;
     gap: 20px;
     position: relative;
-    z-index: 999;
+    box-shadow: 0 .125rem .0rem rgba(0,0,0,.075) !important;
 `
 
 const Close = styled.div`
@@ -37,6 +38,8 @@ const Close = styled.div`
     top: 10px;
     right: 10px;
     cursor: pointer;
+    color: red;
+    font-size: 2rem;
  
 `
 
@@ -45,7 +48,7 @@ const Title = styled.h1`
 `
 
 const Input = styled.input`
-    border: 1px solid ${({ theme }) => theme.soft}
+border: 1px solid ${({ theme }) => theme.soft};
     color: ${({ theme }) => theme.text};
     border-radius: 3px;
     padding: 10px;
@@ -66,7 +69,6 @@ padding: 10px 20px;
 font-weight: 500;
 cursor: pointer;
 border: 1px solid ${({ theme }) => theme.soft};
-color: ${({ theme }) => theme.text};
 `
 
 const Label = styled.label`

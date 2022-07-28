@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { signInWithPopup } from "firebase/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginFailure, loginStart, loginSuccess } from "../features/userSlice";
 import { auth, provider } from "../firebase";
 
+import {  toast } from 'react-toastify';
+
+
+
+
+import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,10 +25,11 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.bgLighter};
+  background-color: ${({ theme }) => theme.bg};
   border: 1px solid ${({ theme }) => theme.soft};
   padding: 20px 50px;
   gap: 10px;
+  width: 500px;
 `;
 
 const Title = styled.h1`
@@ -57,19 +64,25 @@ const More = styled.div`
   display: flex;
   margin-top: 10px;
   font-size: 12px;
+  justify-content: space-between;
   color: ${({ theme }) => theme.textSoft};
 `;
 
 const Links = styled.div`
-  margin-left: 50px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Link = styled.span`
-  margin-left: 30px;
+  margin-left: 60px;
+  display: block;
 `;
 
 const SignIn = () => {
 
+  const {currentUser} = useSelector(state=>state.user);
+  const navigate = useNavigate();
+  
   const [name,setName] = useState("");
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
@@ -81,11 +94,14 @@ const SignIn = () => {
     try {
       const res = await axios.post("/auth/signin",{
         name,password
-      })
-      console.log(res?.data);
+      });
+      // console.log(res?.data);
       dispatch(loginSuccess(res?.data));
+      toast.success("Successfully Logging in!");
+      navigate("/");
     } catch (error) {
       dispatch(loginFailure());
+      toast.error("Something went wrong, please check your username or password");
     }
   }
 
@@ -100,16 +116,38 @@ const SignIn = () => {
       }).then(res=>{
         dispatch(loginSuccess(res?.data));
       })
-
+      navigate("/");
     }).catch((err)=>{
       console.log(err);
-      dispatch(loginFailure())
+      dispatch(loginFailure());
+      toast.info("Something went wrong!");
     })
   }
 
   const handleSignup = async() => {
-
+    dispatch(loginStart())
+    await axios.post("/auth/signup",{
+      name,password,email
+    }).then(res=>{
+      if(res.status === 201){
+        dispatch(loginSuccess(res?.data));
+        toast.success("Successfully registed!");
+      }
+    }).catch((err)=>{
+      console.log(err);
+      dispatch(loginFailure());
+    })
   }
+
+
+
+
+  useEffect(() => {
+    if(currentUser !== null){
+      // navigate("/");
+    }
+  }, [currentUser,navigate]);
+
   return (
     <Container>
       <Wrapper>
@@ -118,7 +156,6 @@ const SignIn = () => {
         <Input placeholder="username" value={name} onChange={(e)=>setName(e.target.value)} />
         <Input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="password" />
         <Button onClick={handleSignin}>Sign in</Button>
-        <Title>or</Title>
         <Button onClick={signInWithGoogle}>Signin with Google</Button>
         <Title>or</Title>
         <Input placeholder="username" value={name} onChange={(e)=>setName(e.target.value)}  />

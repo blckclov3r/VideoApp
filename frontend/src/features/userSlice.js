@@ -22,15 +22,17 @@ export const userSlice = createSlice({
             state.error = true;
         },
         logout: (state,action) =>{
-            return initialState;
+            state.currentUser= null;
+            state.loading= false;
+            state.error= false;
         },
         subscribe: (state,action) =>{
-            if(state.currentUser.subscribedUsers.includes(action.payload)){
+            if(state.currentUser?.subscribedUsers.includes(action.payload)){
                 state.currentUser.subscribedUsers.splice(state.currentUser.subscribedUsers.findIndex(channelId=>{
                     return channelId === action.payload
                 }),1);
             }else{
-                state.currentUser.subscribedUsers.push(action.payload) 
+                state.currentUser?.subscribedUsers.push(action.payload) 
             }
         }
     }

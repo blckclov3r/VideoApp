@@ -5,9 +5,10 @@ import styled from "styled-components";
 import Card from "../components/Card";
 
 const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+display: grid;
+grid-template-columns: repeat(auto-fill,minmax(270px,1fr));
+grid: 1rem;
+grid-column-gap: 1rem;
 `;
 export default function Search() {
     const [videos, setVideos] = useState([]);

@@ -1,7 +1,6 @@
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import Card from "../components/Card";
 import Comments from "../components/Comments";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
@@ -15,10 +14,11 @@ import { dislike, fetchSuccess, like } from "../features/videoSlice";
 import { formatDistanceToNow } from "date-fns";
 import { subscribe } from "../features/userSlice";
 import Recommendation from "../components/Recommendation";
-
+import ReactPlayer from 'react-player'
+import {  toast } from 'react-toastify';
 const Container = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 1rem;
 `;
 
 const Content = styled.div`
@@ -112,14 +112,10 @@ const Subscribe = styled.button`
   cursor: pointer;
 `;
 
-const VideoFrame = styled.video`
-  max-height: 520px;
-  width: 100%;
-  object-fit: cover;
-`
+
 
 const Video = () => {
-
+  
   const {currentVideo} = useSelector(state=>state.video);
   const {currentUser} = useSelector(state=>state.user);
 
@@ -130,8 +126,12 @@ const Video = () => {
   const [channel,setChannel] = useState(null)
 
   useEffect(()=>{
+ 
     const fetchData = async ()=>{
       try {
+
+        await axios.put(`/videos/view/${path}`)
+
         const videoRes = await axios.get(`/videos/find/${path}`);
         // console.log(videoRes?.data)
         const channelRes = await axios.get(`/users/find/${videoRes?.data.userId}`)
@@ -149,25 +149,27 @@ const Video = () => {
   // console.log('currentVideo',currentVideo?.videoUrl)
 
   const handleLike = async() =>{
-    await axios.put(`/users/like/${currentVideo._id}`)
+    toast.info("Like!")
+    await axios.put(`/users/like/${currentVideo?._id}`)
     .then((res)=>console.log(res))
-    dispatch(like(currentUser._id));
+    dispatch(like(currentUser?._id));
   }
 
   const handleDislike = async() =>{
-    await axios.put(`/users/dislike/${currentVideo._id}`)
-    dispatch(dislike(currentUser._id));
+    toast.info("Dislike!")
+    await axios.put(`/users/dislike/${currentVideo?._id}`)
+    dispatch(dislike(currentUser?._id));
   }
 
   // console.log(currentUser?.subscribedUsers.includes(channel?._id))
 
   const handleSubscribe = async()=>{
-    if(currentUser?.subscribedUsers?.includes(channel._id)){
-      await axios.put(`/users/subscribe/${channel?._id}`).then(res=>console.log(res?.data))
-    }else{
-
+    if(currentUser?.subscribedUsers?.includes(channel?._id)){
+      toast.info("Unsubscribe!")
       await axios.put(`/users/unsubscribe/${channel?._id}`).then(res=>console.log(res?.data));
-   
+    }else{
+      toast.info("Subscribe!")
+      await axios.put(`/users/subscribe/${channel?._id}`).then(res=>console.log(res?.data))
     }
     dispatch(subscribe(channel?._id))
   }
@@ -178,20 +180,21 @@ const Video = () => {
       <Content>
         <VideoWrapper>
           
-          <VideoFrame src={currentVideo?.videoUrl} controls />
+          <ReactPlayer  url={currentVideo?.videoUrl} controls  width='100%' 
+          height='520px' playing={true}  progressInterval={3000} />
 
 
         </VideoWrapper>
-        <Title>{currentVideo.title}</Title>
+        <Title>{currentVideo?.title}</Title>
         <Details>
-          <Info>{currentVideo.views} views • {formatDistanceToNow(new Date(currentVideo?.createdAt), { addSuffix: true })}</Info>
+          <Info>{currentVideo?.views} views • {formatDistanceToNow(new Date(currentVideo && currentVideo?.createdAt), { addSuffix: true })}</Info>
           <Buttons>
             <Button onClick={handleLike}>
-              {currentVideo.likes?.includes(currentUser._id) ? <ThumbUpIcon /> :  <ThumbUpOutlinedIcon />}
-              {currentVideo.likes?.length}
+              {currentVideo?.likes?.includes(currentUser?._id) ? <ThumbUpIcon /> :  <ThumbUpOutlinedIcon />}
+              {currentVideo?.likes?.length}
             </Button>
             <Button onClick={handleDislike}>
-              {currentVideo.dislikes?.includes(currentUser._id) ? <ThumbDownIcon /> :  <ThumbDownOffAltOutlinedIcon />}
+              {currentVideo?.dislikes?.includes(currentUser?._id) ? <ThumbDownIcon /> :  <ThumbDownOffAltOutlinedIcon />}
              Dislike
             </Button>
             <Button>
@@ -205,21 +208,21 @@ const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src={channel?.img} />
+            <Image src={channel && channel?.img} />
             <ChannelDetail>
-              <ChannelName>{channel?.name}</ChannelName>
-              <ChannelCounter>{channel?.subscribers} subscribers</ChannelCounter>
+              <ChannelName>{channel && channel?.name}</ChannelName>
+              <ChannelCounter>{channel && channel?.subscribers} subscribers</ChannelCounter>
               <Description>
-                {channel?.desc}
+                {channel && channel?.desc}
               </Description>
             </ChannelDetail>
           </ChannelInfo>
-          <Subscribe onClick={channel && handleSubscribe}>{currentUser.subscribedUsers.includes(channel?._id) ? 'SUBSCRIBE' : 'UNSBSCRIBE' }</Subscribe>
+          <Subscribe onClick={channel && handleSubscribe}>{currentUser && currentUser?.subscribedUsers?.includes(channel?._id) ? 'UNSBSCRIBE' : 'SUBSCRIBE' }</Subscribe>
         </Channel>
         <Hr />
         <Comments videoId={currentVideo?._id} />
       </Content>
-      <Recommendation tags={currentVideo.tags} />
+      <Recommendation tags={currentVideo?.tags} />
     </Container>
   );
 };

@@ -19,10 +19,11 @@ import styled from "styled-components";
 import videAppImg from "../img/yt.png";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import {  toast } from 'react-toastify';
 
 const Container = styled.div`
   flex: 1;
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
   background-color: ${({ theme }) => theme.bg};
   color: ${({ theme }) => theme.text};
   font-size: 14px;
@@ -94,6 +95,10 @@ export default function Menu({ darkMode, setDarkMode }) {
 
   const user = useSelector(state=>state.user.currentUser);
 
+  const handleItemClick = (itemName) =>{
+    toast(`Sorry, this ${itemName} is not available`)
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -127,11 +132,11 @@ export default function Menu({ darkMode, setDarkMode }) {
         </Link>
 
         <Hr />
-        <Item>
+        <Item onClick={()=>{handleItemClick("Library")}}>
           <VideoLibraryOutlinedIcon />
           Library
         </Item>
-        <Item>
+        <Item onClick={()=>{handleItemClick("History")}}>
           <HistoryOutlinedIcon />
           History
         </Item>
@@ -154,40 +159,40 @@ export default function Menu({ darkMode, setDarkMode }) {
         }
         
         <Title>BEST OF VIDEOAPP</Title>
-        <Item>
+        <Item onClick={()=>{handleItemClick("Music")}}>
           <LibraryMusicOutlinedIcon />
           Music
         </Item>
-        <Item>
+        <Item onClick={()=>{handleItemClick("Sports")}}>
           <SportsBasketballOutlinedIcon />
           Sports
         </Item>
-        <Item>
+        <Item onClick={()=>{handleItemClick("Gaming")}}>
           <SportsEsportsOutlinedIcon />
           Gaming
         </Item>
-        <Item>
+        <Item onClick={()=>{handleItemClick("Movies")}}>
           <MovieOutlinedIcon />
           Movies
         </Item>
-        <Item>
+        <Item onClick={()=>{handleItemClick("News")}}>
           <ArticleOutlinedIcon />
           News
         </Item>
-        <Item>
+        <Item onClick={()=>{handleItemClick("Live")}}>
           <LiveTvOutlinedIcon />
           Live
         </Item>
         <Hr />
-        <Item>
+        <Item onClick={()=>{handleItemClick("Settings")}}>
           <SettingsOutlinedIcon />
           Settings
         </Item>
-        <Item>
+        <Item onClick={()=>{handleItemClick("Report")}}>
           <FlagOutlinedIcon />
           Report
         </Item>
-        <Item>
+        <Item onClick={()=>{handleItemClick("Help")}}>
           <HelpOutlineOutlinedIcon />
           Help
         </Item>

@@ -4,23 +4,23 @@ import styled from "styled-components";
 import Card from "./Card";
 
 const Container = styled.div`
-  flex: 2;
+  flex: 3;
 `;
 
 export default function Recommendation({ tags }) {
-    const [videos, setVideos] = useState([]);
+    const [videos, setVideos] = useState(null);
 
     useEffect(() => {
       const fetchVideos = async () => {
         const res = await axios.get(`/videos/tags?tags=${tags}`);
-        setVideos(res.data);
+        setVideos(res?.data);
       };
       fetchVideos();
     }, [tags]);
   return (
     <Container>
-    {videos.map((video) => (
-      <Card type="sm" key={video._id} video={video} />
+    {videos?.map((video) => (
+      <Card type="sm" key={video?._id} video={video} />
     ))}
   </Container>
   )

@@ -5,10 +5,10 @@ import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-    width: 300px;
     margin-bottom: 45px;
     cursor: pointer;
     padding: 10px;
+    
 `;
 
 const Image = styled.img`
@@ -17,6 +17,7 @@ const Image = styled.img`
     background: #f1f1f1;
     border-radius: 4px;
     border: none;
+    box-shadow: 0 .125rem .0rem rgba(0,0,0,.075) !important;
 `
 
 const Details = styled.div`
@@ -30,6 +31,7 @@ const ChannelImage = styled.img`
     height: 36px;
     border-radius: 50%;
     background: #ccc;
+    
 `
 
 const Texts = styled.div``;
@@ -67,16 +69,16 @@ export default function Card({type,video}) {
   // console.log(channel)
   // console.log(video)
   return (
-    <Link to={`/video/${video._id}`} style={{textDecoration: 'none'}}>
+    <Link to={`/video/${video?._id}`} style={{textDecoration: 'none'}}>
         <Container type={type}>
                 {/* <Image src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640" /> */}
                 <Image src={video?.imgUrl} />
                 <Details type={type}>
-                    <ChannelImage />
+                    <ChannelImage src={channel?.img} />
                     <Texts>
                 <Title>{video?.title}</Title>
                 <ChannelName>{channel?.name}</ChannelName>
-                <Info>{video?.views} views •  {formatDistanceToNow(new Date(video?.createdAt), { addSuffix: true })}</Info>
+                <Info>{video?.views} views •  {video && formatDistanceToNow(new Date(video?.createdAt), { addSuffix: true })}</Info>
             </Texts>
                 </Details>
         </Container>

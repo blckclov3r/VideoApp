@@ -10,6 +10,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { darkTheme, lightTheme } from "./utils/Theme";
 import Search from "./pages/Search";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Container = styled.div`
   display: flex;
   flex-direction: row;
@@ -17,7 +20,7 @@ const Container = styled.div`
 
 const Main = styled.div`
   flex: 6;
-  background: ${({theme})=>theme.bgLighter};
+  background-color: ${({ theme }) => theme.bgLighter};
   color: ${({theme})=>theme.text};
 `
 
@@ -26,7 +29,7 @@ padding: 22px 2rem;
 `
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <BrowserRouter>
@@ -53,6 +56,13 @@ function App() {
         </Container>
 
       </BrowserRouter>
+      
+      <ToastContainer
+        position="bottom-right"
+        closeOnClick
+        newestOnTop={true}
+      />
+
     </ThemeProvider>
   );
 }
