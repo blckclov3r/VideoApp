@@ -12,15 +12,15 @@ const Container = styled.div`
 
 export default function Home({type}) {
 
-  const [videos,setVideos] = useState([]);
+  const [videos,setVideos] = useState(null);
 
   useEffect(() => {
     const fetchVideos = async () =>{
       await axios.get(`/videos/${type}`)
         .then((res)=>{
-          if(res.status === 200){
-            setVideos(res?.data);
-          }
+          setVideos(res?.data);
+        }).catch((err)=>{
+          console.log(err)
         })
     }
     fetchVideos();
@@ -30,10 +30,9 @@ export default function Home({type}) {
   return (
     <Container>
        { 
-        videos && videos.map((video)=>{
-          return  <Card video={video} type={type}  key={video._id} />
-        })
-   
+         Array.isArray(videos) && videos?.map((video)=>(
+          <Card video={video} type={type}  key={video._id} />
+         ))
        }
     </Container>
   )
