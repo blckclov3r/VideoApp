@@ -181,7 +181,7 @@ const Video = () => {
         <VideoWrapper>
           
           <ReactPlayer  url={currentVideo?.videoUrl} controls  width='100%' 
-          height='520px' playing={true}  progressInterval={3000} />
+          height='520px' playing={true}   />
 
 
         </VideoWrapper>

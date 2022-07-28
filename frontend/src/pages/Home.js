@@ -18,7 +18,7 @@ export default function Home({type}) {
     const fetchVideos = async () =>{
       await axios.get(`/videos/${type}`)
         .then((res)=>{
-          if(res === 200){
+          if(res.status === 200){
             setVideos(res?.data);
           }
         })
@@ -28,13 +28,13 @@ export default function Home({type}) {
 
 
   return (
-    <>
+    <Container>
        { 
         videos && videos.map((video)=>{
           return  <Card video={video} type={type}  key={video._id} />
         })
    
        }
-    </>
+    </Container>
   )
 }
