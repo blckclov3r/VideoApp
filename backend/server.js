@@ -14,9 +14,7 @@ app.use(cors());
 
 
 
-app.get("/", function (req, res) {
-    res.json({msg: 'connected'})
-});
+
 
 app.use(cookieParser())
 app.use(express.json())
