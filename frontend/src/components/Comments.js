@@ -78,7 +78,7 @@ const Comments = ({videoId}) => {
     <Container>
           <form onSubmit={commentSubmit}>
       <NewComment>
-        <Avatar src={currentUser.img ? currentUser.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
+        <Avatar src={currentUser?.img ? currentUser?.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
         <Input placeholder="Add a comment..."  value={commentInput} onChange={(e)=>setCommentInput(e.target.value)}/>
  
       </NewComment>
