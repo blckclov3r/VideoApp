@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 
 
-const PORT = process.env.PORT || 8000;
+
 
 app.get("/", function (req, res) {
     res.json({msg: 'connected'})
@@ -47,7 +47,7 @@ if(process.env.NODE_ENV === 'production'){
     app.get('/',(req,res)=>res.send('Please set to production'))
 }
 
-
+const PORT = process.env.PORT || 8000;
 mongoose.connect(process.env.MONGO_URI)
 .then(()=>{
     app.listen(PORT,()=>{
