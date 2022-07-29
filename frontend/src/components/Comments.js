@@ -88,7 +88,7 @@ const Comments = ({videoId}) => {
       </NewComment>
       <Button type="submit">Comment</Button>
       </form>
-      {comments && comments?.map(comment=>{
+      { comments?.map(comment=>{
         return <Comment key={comment?._id} comment={comment} />
       })}
   
