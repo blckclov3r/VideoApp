@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-toast.warning("Disclaimer: This is just a test purposes only!")
+toast.warning("Disclaimer: For test purposes only!")
 
 const queryClient = new QueryClient()
 root.render(
