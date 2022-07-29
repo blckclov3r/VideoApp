@@ -52,10 +52,10 @@ const Comment = ({comment,user}) => {
   return (
 
       <Container>
-         <Avatar src={channel?.img || user.img} alt="user" />
+         <Avatar src={channel?.img || user?.img} alt="user" />
       <Details>
         <Name>
-           {channel?.name || user.name} <Date>1 day ago</Date>
+           {channel?.name || user?.name} <Date>1 day ago</Date>
         </Name>
         <Text>
           {comment?.desc}
