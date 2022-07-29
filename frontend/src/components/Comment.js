@@ -1,6 +1,6 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { axiosInstance } from "../config";
+import {useQuery} from 'react-query'
 
 const Container = styled.div`
   display: flex;
@@ -37,25 +37,26 @@ const Text = styled.span`
 `;
 
 const Comment = ({comment}) => {
-  const [channel,setChannel] = useState(null)
-  useEffect(()=>{
-    const fetchComment = async () =>{
-      
-     await axios.get(`/users/find/${comment?.userId}`).then(res=>setChannel(res?.data))
-   
-    }
-    fetchComment();
-  },[comment.userId])
+  
 
+  const fetchUser = async () =>{
+    const response = await axiosInstance.get(`/users/find/${comment.userId}`);
+    return response?.data;
+  }
+
+  const { data: channel } = useQuery(['COMMENT/FETCHUSER', comment], fetchUser,{
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
+  });
 
 
   return (
 
       <Container>
-      <Avatar src={channel?.img ? channel?.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
+      <Avatar src={(channel?.img !== undefined) ?  channel?.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
       <Details>
         <Name>
-          {channel?.name} <Date>1 day ago</Date>
+          {(channel?.name !== undefined) ? channel?.name : "Anonymous"} <Date>1 day ago</Date>
         </Name>
         <Text>
           {comment?.desc}

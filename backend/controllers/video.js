@@ -70,7 +70,8 @@ export const addView = async(req,res,next)=>{
 export const trendVideo = async(req,res,next)=>{
     try {
         // (-1) get the highest views, (1) is less view
-       const videos = await Video.find().sort({views:-1})
+       const videos = await Video.find().sort({views: -1})
+     
        res.status(200).json(videos)
     } catch (error) {
        next(error);

@@ -133,17 +133,17 @@ const Video = () => {
         await axiosInstance.put(`/videos/view/${path}`)
 
         const videoRes = await axiosInstance.get(`/videos/find/${path}`);
-        // console.log(videoRes?.data)
+
         const channelRes = await axiosInstance.get(`/users/find/${videoRes?.data.userId}`)
         dispatch(fetchSuccess(videoRes?.data))
         setChannel(channelRes?.data)
-        // console.log('channel',channelRes?.data)
+   
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  },[path,dispatch]);
+  },[dispatch,path]);
 
 
   // console.log('currentVideo',currentVideo?.videoUrl)

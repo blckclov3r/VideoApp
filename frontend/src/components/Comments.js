@@ -1,9 +1,9 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { axiosInstance } from "../config";
 import Comment from "./Comment";
+import {useQuery} from 'react-query'
+import { useState } from "react";
 
 const Container = styled.div``;
 
@@ -40,24 +40,24 @@ const Button = styled.button`
 const Comments = ({videoId}) => {
 
   const {currentUser} = useSelector(state=>state.user);
-  const [comments, setComments] = useState(null);
 
   const [commentInput,setCommentInput] = useState("");
 
-  useEffect(() => {
-    const fetchComments = async()=>{
-      try {
-         const commentRes = await axiosInstance.get(`/comments/${videoId}`)
-         setComments(commentRes?.data)
+ 
 
-      } catch (error) {
-         console.log('fetchComments',error);
-      }
-    }
-    fetchComments();
-  }, [videoId]);
 
-  // console.log(comments)
+  const fetchComments = async () =>{
+    const response = await axiosInstance.get(`/comments/${videoId}`)
+    return response?.data;
+  }
+
+  const { data: comments } = useQuery(['COMMENT/FETCHCOMMENTS', videoId], fetchComments,{
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
+  });
+
+  console.log(comments)
+
 
   const commentSubmit = async(e) =>{
     e.preventDefault();

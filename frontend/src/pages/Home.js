@@ -23,7 +23,7 @@ export default function Home({ type='random' }) {
 
   const { data, isLoading,status} = useQuery(['HOME/FETCHVIDEOS', type], fetchVideos,{
     refetchOnWindowFocus: false,
-    keepPreviousData: true,
+    keepPreviousData: true
   });
 
   if( status === 401 || status === 'error'){
