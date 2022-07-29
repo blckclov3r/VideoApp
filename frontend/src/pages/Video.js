@@ -126,23 +126,18 @@ const Video = () => {
   const [channel,setChannel] = useState(null)
 
   useEffect(()=>{
-
-   
-
+ 
     const fetchData = async ()=>{
       try {
 
-        await axiosInstance.get(`/videos/find/${path}`).then((res=>{
-           dispatch(fetchSuccess(res?.data))
+        await axiosInstance.put(`/videos/view/${path}`)
 
-           axiosInstance.get(`/users/find/${res?.data.userId}`).then(res=>{
-            setChannel(res?.data)
-          });
+        const videoRes = await axiosInstance.get(`/videos/find/${path}`);
 
-        }))
-      
-        await axiosInstance.put(`/videos/view/${path}`);
-        
+        const channelRes = await axiosInstance.get(`/users/find/${videoRes?.data.userId}`)
+        dispatch(fetchSuccess(videoRes?.data))
+        setChannel(channelRes?.data)
+   
       } catch (error) {
         console.log(error);
       }
