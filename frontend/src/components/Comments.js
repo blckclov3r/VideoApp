@@ -1,8 +1,6 @@
 
 import styled from "styled-components";
-import { axiosInstance } from "../config";
 import Comment from "./Comment";
-import {useQuery} from 'react-query'
 import { useState } from "react";
 import { createComment, fetchComments, setComments } from "../features/commentSlice";
 import {useDispatch, useSelector} from 'react-redux'
@@ -50,15 +48,6 @@ const Comments = ({videoId}) => {
   
   const {comments} = useSelector(state=>state.comment);
  
-
-
-  // const fetchComments = async () =>{
-  //   const response = await axiosInstance.get(`/comments/${videoId}`)
-  //   return response?.data;
-  // }
-
-  // const { data: comments } = useQuery(['COMMENT/FETCHCOMMENTS', videoId], fetchComments);
-
 
   dispatch(setComments(comments))
 
