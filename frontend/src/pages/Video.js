@@ -165,11 +165,15 @@ const Video = () => {
 
   const handleSubscribe = async()=>{
     if(currentUser?.subscribedUsers?.includes(channel?._id)){
-      toast.info("Unsubscribe!")
-      await axiosInstance.put(`/users/unsubscribe/${channel?._id}`).then(res=>console.log(res?.data));
+    
+      await axiosInstance.put(`/users/unsubscribe/${channel?._id}`).then(res=>{
+        toast.info("Unsubscribe!")
+      });
     }else{
-      toast.info("Subscribe!")
-      await axiosInstance.put(`/users/subscribe/${channel?._id}`).then(res=>console.log(res?.data))
+    
+      await axiosInstance.put(`/users/subscribe/${channel?._id}`).then(res=>{
+        toast.info("Subscribe!")
+      })
     }
     dispatch(subscribe(channel?._id))
   }
