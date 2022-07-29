@@ -6,9 +6,11 @@ export const verifyToken = (req,res,next)=>{
     const token = req.cookies.access_token;
     // console.log('REQ COOKIES',req.cookies)
 
+
     if(!token){
         return next(createError(401,'You are not auntheticated'));
     }
+
     // verify a token symmetric
     jwt.verify(token, process.env.JWT, (err,user)=>{
         // console.log('user',user)

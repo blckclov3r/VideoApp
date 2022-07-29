@@ -1,5 +1,7 @@
 import  userReducer  from "../features/userSlice";
 import  videoReducer  from "../features/videoSlice";
+import  commentReducer  from "../features/commentSlice";
+
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import {
@@ -23,7 +25,8 @@ import {
   const rootReducer = combineReducers(
     {
       user:userReducer,
-      video: videoReducer
+      video: videoReducer,
+      comment: commentReducer
     }
   )
 

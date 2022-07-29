@@ -4,6 +4,8 @@ import { axiosInstance } from "../config";
 import Comment from "./Comment";
 import {useQuery} from 'react-query'
 import { useState } from "react";
+import { createComment, setComments } from "../features/commentSlice";
+import {useDispatch} from 'react-redux'
 
 const Container = styled.div``;
 
@@ -38,11 +40,12 @@ const Button = styled.button`
 `
 
 const Comments = ({videoId}) => {
-
+  
   const {currentUser} = useSelector(state=>state.user);
 
   const [commentInput,setCommentInput] = useState("");
 
+  const dispatch = useDispatch();
  
 
 
@@ -62,17 +65,23 @@ const Comments = ({videoId}) => {
   const commentSubmit = async(e) =>{
     e.preventDefault();
 
-
-    await axiosInstance.post("/comments",{
-      userId: currentUser?._id,
-      videoId,
-      desc: commentInput
-    }).then(res=> console.log(res))
-    .catch((err)=>{
-      console.log(err);
-    })
+    dispatch(createComment({
+        userId: currentUser?._id,
+        videoId,
+        desc: commentInput
+    }));
+    // await axiosInstance.post("/comments",{
+    //   userId: currentUser?._id,
+    //   videoId,
+    //   desc: commentInput
+    // }).then(res=> console.log(res))
+    // .catch((err)=>{
+    //   console.log(err);
+    // })
 
   }
+
+  dispatch(setComments(comments))
 
 
   return (
