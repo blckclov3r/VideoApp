@@ -68,11 +68,18 @@ export default function Card({type,video}) {
 
   // console.log(channel)
   // console.log(video)
+
+  const replaceImage = (error) => {
+    //replacement of broken Image
+    error.onerror = "";
+    error.target.src = "https://i.ytimg.com/vi/8Ze0b2VvwHQ/maxresdefault.jpg"
+    return true;
+  }
+
   return (
     <Link to={`/video/${video?._id}`} style={{textDecoration: 'none'}}>
         <Container type={type}>
-                {/* <Image src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640" /> */}
-                <Image src={video?.imgUrl} />
+                <Image src={video?.imgUrl} alt="Video" onError={replaceImage} />
                 <Details type={type}>
                     <ChannelImage src={channel?.img} />
                     <Texts>
