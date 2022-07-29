@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux";
+
 import styled from "styled-components";
 import { axiosInstance } from "../config";
 import Comment from "./Comment";
 import {useQuery} from 'react-query'
 import { useState } from "react";
-import { createComment, setComments } from "../features/commentSlice";
-import {useDispatch} from 'react-redux'
+import { createComment, fetchComments, setComments } from "../features/commentSlice";
+import {useDispatch, useSelector} from 'react-redux'
 
 const Container = styled.div``;
 
@@ -42,19 +42,22 @@ const Button = styled.button`
 const Comments = ({videoId}) => {
   
   const {currentUser} = useSelector(state=>state.user);
-
   const [commentInput,setCommentInput] = useState("");
 
   const dispatch = useDispatch();
+
+  dispatch(fetchComments(videoId))
+  
+  const comments = useSelector(state=>state.comment.comments);
  
 
 
-  const fetchComments = async () =>{
-    const response = await axiosInstance.get(`/comments/${videoId}`)
-    return response?.data;
-  }
+  // const fetchComments = async () =>{
+  //   const response = await axiosInstance.get(`/comments/${videoId}`)
+  //   return response?.data;
+  // }
 
-  const { data: comments } = useQuery(['COMMENT/FETCHCOMMENTS', videoId], fetchComments);
+  // const { data: comments } = useQuery(['COMMENT/FETCHCOMMENTS', videoId], fetchComments);
 
 
   dispatch(setComments(comments))
