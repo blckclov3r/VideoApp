@@ -96,7 +96,7 @@ export default function Menu({ darkMode, setDarkMode }) {
   const user = useSelector(state=>state.user.currentUser);
 
   const handleItemClick = (itemName) =>{
-    toast(`Sorry, this ${itemName} is not available`)
+    toast.error(`Sorry!, ${itemName} is not available`)
   }
 
   return (

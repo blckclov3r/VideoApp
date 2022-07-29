@@ -10,19 +10,31 @@ const Container = styled.div`
     grid-column-gap: 1rem;
 `
 
-export default function Home({ type }) {
+export default function Home({ type='random' }) {
 
 
   const fetchVideos = async () => {
     return await axiosInstance.get(`/videos/${type}`)
       .then(res => res?.data)
       .catch((err) => {
-        console.log(err)
+        console.log(err?.response?.data?.status);
       });
   }
 
-  const { data} = useQuery(['HOME/FETCHVIDEOS', type], fetchVideos);
-  // console.log(data);
+  const { data, isLoading,status} = useQuery(['HOME/FETCHVIDEOS', type], fetchVideos);
+
+  if( status === 401 || status === 'error'){
+    return (
+      <h2 style={{color: '#ccc'}}>Something went wrong or Not authenticated</h2>
+    )
+  }
+
+  if( isLoading){
+    return (
+      <h2 style={{color: '#ccc'}}>Loading...</h2>
+    )
+  }
+
   return (
     <Container>
       {

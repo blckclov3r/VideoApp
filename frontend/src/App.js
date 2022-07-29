@@ -47,7 +47,7 @@ function App() {
 
                 <Route path="/" element={<Layout />}>
 
-                  <Route path="/" element={<Home type="random" />} />
+                  <Route path="/" element={<Home />} />
                   <Route path="trends" element={<Home type="trend" />} />
                   <Route path="subscriptions" element={<Home type="sub"  />} />
 
