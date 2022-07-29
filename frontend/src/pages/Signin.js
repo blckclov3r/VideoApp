@@ -116,7 +116,9 @@ const SignIn = () => {
       }).then(res=>{
         dispatch(loginSuccess(res?.data));
       })
+      
       navigate("/");
+
     }).catch((err)=>{
       console.log(err);
       dispatch(loginFailure());
