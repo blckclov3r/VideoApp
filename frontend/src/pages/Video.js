@@ -179,9 +179,9 @@ const Video = () => {
     <Container>
       <Content>
         <VideoWrapper>
-          
-          <ReactPlayer  url={currentVideo?.videoUrl} controls  width='100%' 
-          height='520px' playing={true}   />
+         
+         <ReactPlayer  url={currentVideo?.videoUrl} controls  width='100%' 
+            height='520px' playing={false}   />
 
 
         </VideoWrapper>

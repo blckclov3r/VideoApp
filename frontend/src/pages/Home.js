@@ -25,7 +25,11 @@ export default function Home({ type='random' }) {
 
   if( status === 401 || status === 'error'){
     return (
-      <h2 style={{color: '#ccc'}}>Something went wrong or Not authenticated</h2>
+      <>
+       <h2 style={{color: '#ccc'}}>Something went wrong or Not authenticated</h2>
+       <a href="https://facebook.com/blckclov3r" style={{color: "#f1f1f1",textDecoration: 'none'}}>Need help? add me on Facebook @blckclov3r</a>
+      </>
+     
     )
   }
 

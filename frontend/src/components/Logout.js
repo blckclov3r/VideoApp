@@ -38,7 +38,6 @@ const Close = styled.div`
     cursor: pointer;
     color: red;
     font-size: 2rem;
- 
 `
 
 const Button = styled.button`
@@ -46,11 +45,14 @@ border-radius: 3px;
 border: none;
 padding: 10px 20px;
 font-weight: 500;
-margin-top: 2rem;
+
 cursor: pointer;
 border: 1px solid ${({ theme }) => theme.soft};
 color: ${({ theme }) => theme.text};
 background: ${({ theme }) => theme.bgLighter};
+&:hover{
+    background: ${({ theme }) => theme.bg};
+}
 `
 const dispatch = useDispatch();
 const navigate = useNavigate();
@@ -64,7 +66,9 @@ const navigate = useNavigate();
 
   return (
     <Container>
+  
         <Wrapper>
+        <h2 style={{marginRight: '10px'}}>Are you sure?</h2>
           <Close  onClick={()=>{setLogoutModal(false)}}>x</Close>
           <Button onClick={handleLogout}>Logout</Button>
         </Wrapper>
