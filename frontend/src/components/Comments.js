@@ -54,37 +54,25 @@ const Comments = ({videoId}) => {
     return response?.data;
   }
 
-  const { data: comments } = useQuery(['COMMENT/FETCHCOMMENTS', videoId], fetchComments,{
-    refetchOnWindowFocus: false,
-    keepPreviousData: true,
-  });
-
-  console.log(comments)
+  const { data: comments } = useQuery(['COMMENT/FETCHCOMMENTS', videoId], fetchComments);
 
 
-  const commentSubmit = async(e) =>{
+  dispatch(setComments(comments))
+
+  const commentSubmit = (e) =>{
     e.preventDefault();
 
     if(commentInput === ""){
        return;
     }
-
     dispatch(createComment({
         videoId,
         desc: commentInput
     }));
-    // await axiosInstance.post("/comments",{
-    //   userId: currentUser?._id,
-    //   videoId,
-    //   desc: commentInput
-    // }).then(res=> console.log(res))
-    // .catch((err)=>{
-    //   console.log(err);
-    // })
 
   }
 
-  dispatch(setComments(comments))
+
 
 
   return (

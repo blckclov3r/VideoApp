@@ -8,11 +8,14 @@ const initialState = {
 
 const namespace = 'comment';
 export const createComment = createAsyncThunk(`${namespace}/createComment`, async(commentData)=>{
-    const response =  await axiosInstance.post("/comments",commentData)
-          .catch((err)=>{
-            console.log(err);
+    return await axiosInstance.post("/comments",commentData)
+        .then((res)=>{
+            console.log('createComment',res?.data);
+            return res?.data;
         })
-    return response?.data;
+          .catch((err)=>{
+            console.log('createComment',err);
+        }) 
 });
 
 
