@@ -26,6 +26,7 @@ export default function Home({ type='random' }) {
     keepPreviousData: true
   });
 
+
   if( status === 401 || status === 'error'){
     return (
       <>
@@ -45,7 +46,7 @@ export default function Home({ type='random' }) {
   return (
     <Container>
       {
-        data && data?.map((video) => (
+        (data !== undefined || data !== null) && data?.map((video) => (
           <Card video={video} type={type} key={video._id} />
         ))
       }
