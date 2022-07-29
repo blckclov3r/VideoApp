@@ -24,10 +24,11 @@ app.use(cors());
 
 
 
-
-
 app.use(cookieParser())
 app.use(express.json())
+app.use(express.urlencoded({extended: false}))
+
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/comments", commentRoutes);
@@ -45,12 +46,14 @@ app.use((err,req,res,next)=>{
     });
 });
 
+console.log(path.join(__dirname,'./../frontend/build'))
+console.log(path.resolve(__dirname, '../frontend/build', 'index.html'))
 
 // serve frontend
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static(path.join(__dirname,'../frontend/build')))
-    app.get('*',(req,res)=>{
-        return res.sendFile(path.resolve(__dirname, '../', 'frontend', 'build', 'index.html'))
+    app.get('/*',(req,res)=>{
+         res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'))
     })
 }else{
     app.get('/',(req,res)=>res.send('Please set to production'))

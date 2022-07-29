@@ -16,6 +16,7 @@ import { subscribe } from "../features/userSlice";
 import Recommendation from "../components/Recommendation";
 import ReactPlayer from 'react-player'
 import {  toast } from 'react-toastify';
+import { axiosInstance } from "../config";
 const Container = styled.div`
   display: flex;
   gap: 1rem;
@@ -130,11 +131,11 @@ const Video = () => {
     const fetchData = async ()=>{
       try {
 
-        await axios.put(`/videos/view/${path}`)
+        await axiosInstance.put(`/videos/view/${path}`)
 
-        const videoRes = await axios.get(`/videos/find/${path}`);
+        const videoRes = await axiosInstance.get(`/videos/find/${path}`);
         // console.log(videoRes?.data)
-        const channelRes = await axios.get(`/users/find/${videoRes?.data.userId}`)
+        const channelRes = await axiosInstance.get(`/users/find/${videoRes?.data.userId}`)
         dispatch(fetchSuccess(videoRes?.data))
         setChannel(channelRes?.data)
         // console.log('channel',channelRes?.data)
@@ -150,14 +151,14 @@ const Video = () => {
 
   const handleLike = async() =>{
     toast.info("Like!")
-    await axios.put(`/users/like/${currentVideo?._id}`)
+    await axiosInstance.put(`/users/like/${currentVideo?._id}`)
     .then((res)=>console.log(res))
     dispatch(like(currentUser?._id));
   }
 
   const handleDislike = async() =>{
     toast.info("Dislike!")
-    await axios.put(`/users/dislike/${currentVideo?._id}`)
+    await axiosInstance.put(`/users/dislike/${currentVideo?._id}`)
     dispatch(dislike(currentUser?._id));
   }
 

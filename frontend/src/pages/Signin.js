@@ -12,6 +12,7 @@ import {  toast } from 'react-toastify';
 
 
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../config";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -92,7 +93,7 @@ const SignIn = () => {
   const handleSignin = async()=>{
     dispatch(loginStart())
     try {
-      const res = await axios.post("/auth/signin",{
+      const res = await axiosInstance.post("/auth/signin",{
         name,password
       });
       // console.log(res?.data);
@@ -109,7 +110,7 @@ const SignIn = () => {
     dispatch(loginStart());
      signInWithPopup(auth,provider).then((result)=>{
 
-      axios.post("/auth/google",{
+      axiosInstance.post("/auth/google",{
         name: result.user.displayName,
         email: result.user.email,
         img: result.user.photoURL
@@ -126,7 +127,7 @@ const SignIn = () => {
 
   const handleSignup = async() => {
     dispatch(loginStart())
-    await axios.post("/auth/signup",{
+    await axiosInstance.post("/auth/signup",{
       name,password,email
     }).then(res=>{
       if(res.status === 201){

@@ -12,10 +12,13 @@ import Search from "./pages/Search";
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Layout from "./Layout";
+import NotFound from "./pages/NotFound";
 
 const Container = styled.div`
   display: flex;
   flex-direction: row;
+  height: 100%;
 `
 
 const Main = styled.div`
@@ -38,11 +41,16 @@ function App() {
           <Main>
             <Navbar />
             <Wrapper>
+
               <Routes>
-                <Route path="/">
-                  <Route index element={<Home type="random" />} />
+                <Route path="*" element={<NotFound />} />
+
+                <Route path="/" element={<Layout />}>
+
+                  <Route path="/" element={<Home type="random" />} />
                   <Route path="trends" element={<Home type="trend" />} />
                   <Route path="subscriptions" element={<Home type="sub"  />} />
+
                   <Route path="search" element={<Search   />} />
                   <Route path="signin" element={<Signin />} />
                   <Route path="video">

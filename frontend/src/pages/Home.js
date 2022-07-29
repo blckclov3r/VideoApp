@@ -1,7 +1,7 @@
 import Card from "../components/Card";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
 import styled from "styled-components";
+import { useQuery } from 'react-query'
+import { axiosInstance } from "../config";
 
 const Container = styled.div`
      display: grid;
@@ -10,30 +10,26 @@ const Container = styled.div`
     grid-column-gap: 1rem;
 `
 
-export default function Home({type}) {
-
-  const [videos,setVideos] = useState(null);
-
-  useEffect(() => {
-    const fetchVideos = async () =>{
-      await axios.get(`/videos/${type}`)
-        .then((res)=>{
-          setVideos(res?.data);
-        }).catch((err)=>{
-          console.log(err)
-        })
-    }
-    fetchVideos();
-  }, [type]);
+export default function Home({ type }) {
 
 
+  const fetchVideos = async () => {
+    return await axiosInstance.get(`/videos/${type}`)
+      .then(res => res?.data)
+      .catch((err) => {
+        console.log(err)
+      });
+  }
+
+  const { data} = useQuery(['HOME/FETCHVIDEOS', type], fetchVideos);
+  // console.log(data);
   return (
     <Container>
-       { 
-         Array.isArray(videos) && videos?.map((video)=>(
-          <Card video={video} type={type}  key={video._id} />
-         ))
-       }
+      {
+        data && data?.map((video) => (
+          <Card video={video} type={type} key={video._id} />
+        ))
+      }
     </Container>
   )
 }

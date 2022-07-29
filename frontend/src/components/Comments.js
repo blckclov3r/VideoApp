@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { axiosInstance } from "../config";
 import Comment from "./Comment";
 
 const Container = styled.div``;
@@ -46,7 +47,7 @@ const Comments = ({videoId}) => {
   useEffect(() => {
     const fetchComments = async()=>{
       try {
-         const commentRes = await axios.get(`/comments/${videoId}`)
+         const commentRes = await axiosInstance.get(`/comments/${videoId}`)
          setComments(commentRes?.data)
 
       } catch (error) {
@@ -62,7 +63,7 @@ const Comments = ({videoId}) => {
     e.preventDefault();
 
 
-    await axios.post("/comments",{
+    await axiosInstance.post("/comments",{
       userId: currentUser?._id,
       videoId,
       desc: commentInput
@@ -78,7 +79,7 @@ const Comments = ({videoId}) => {
     <Container>
           <form onSubmit={commentSubmit}>
       <NewComment>
-        <Avatar src={currentUser.img !== "" ? currentUser.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
+        <Avatar src={currentUser && (currentUser.img !== "" || currentUser.img !== null) ? currentUser.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
         <Input placeholder="Add a comment..."  value={commentInput} onChange={(e)=>setCommentInput(e.target.value)}/>
  
       </NewComment>

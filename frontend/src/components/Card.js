@@ -3,6 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router-dom";
+import { axiosInstance } from "../config";
 
 const Container = styled.div`
     margin-bottom: 45px;
@@ -60,7 +61,7 @@ export default function Card({type,video}) {
 
   useEffect(() => {
     const fetchUser = async () =>{
-      const response = await axios.get(`/users/find/${video?.userId}`);
+      const response = await axiosInstance.get(`/users/find/${video?.userId}`);
       setChannel(response?.data);
     }
     fetchUser();

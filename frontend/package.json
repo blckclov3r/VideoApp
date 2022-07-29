@@ -1,5 +1,5 @@
 {
-  "proxy": "http://localhost:8000/api/",
+  "proxy": "http://127.0.0.1:8000/api/",
   "name": "video_app",
   "version": "0.1.1",
   "private": true,
@@ -20,6 +20,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-player": "^2.10.1",
+    "react-query": "^4.0.0",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
@@ -52,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-query": "^1.2.9"
   }
 }
