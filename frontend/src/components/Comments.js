@@ -86,22 +86,26 @@ const Comments = ({videoId}) => {
   }, [videoId,dispatch]);
 
   return (
-    <Container>
-          <form onSubmit={commentSubmit}>
-      <NewComment>
-        <Avatar src={currentUser && (currentUser.img !== "" || currentUser.img !== null) ? currentUser.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
-        <Input placeholder="Add a comment..."  value={commentInput} onChange={(e)=>setCommentInput(e.target.value)}/>
- 
-      </NewComment>
-      <Button type="submit">Comment</Button>
-      </form>
+    <>
+      { currentUser && 
+        <Container>
+        <form onSubmit={commentSubmit}>
+    <NewComment>
+      <Avatar src={currentUser?.img  || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
+      <Input placeholder="Add a comment..."  value={commentInput} onChange={(e)=>setCommentInput(e.target.value)}/>
 
-      { comments &&  comments?.map((comment)=>{
-        return <Comment key={nanoid()} comment={comment} user={currentUser} />
-      })}
-  
+    </NewComment>
+    <Button type="submit">Comment</Button>
+    </form>
 
-    </Container>
+    { comments &&  comments?.map((comment)=>{
+      return <Comment key={nanoid()} comment={comment} user={currentUser} />
+    })}
+
+
+  </Container>
+      }
+    </>
   );
 };
 
