@@ -54,10 +54,10 @@ const Comment = ({comment}) => {
   return (
 
       <Container>
-      <Avatar src={(channel?.img !== undefined) ?  channel?.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
+      <Avatar src={channel && (channel?.img !== undefined) ?  channel?.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
       <Details>
         <Name>
-          {(channel?.name !== undefined) ? channel?.name : "Anonymous"} <Date>1 day ago</Date>
+          {channel && (channel?.name !== undefined) ? channel?.name : "Anonymous"} <Date>1 day ago</Date>
         </Name>
         <Text>
           {comment?.desc}

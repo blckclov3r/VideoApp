@@ -34,7 +34,8 @@ export const commentSlice = createSlice({
     initialState,
     reducers:{
         setComments: (state,action)=>{
-            state.comments = [action.payload,...state.comments];
+            console.log(action.payload)
+             state.comments = [action.payload,...state.comments];
         }
     },
     extraReducers: (builder)=> {
@@ -43,7 +44,6 @@ export const commentSlice = createSlice({
         })
         .addCase(createComment.fulfilled,(state,action)=>{
             state.status = 'idle';
-            state.comments = action.payload;
         })
         .addCase(createComment.rejected,(state,action)=>{
             state.status = 'error';
