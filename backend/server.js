@@ -20,11 +20,7 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}));
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-});
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -32,6 +28,12 @@ app.use("/api/comments", commentRoutes);
 app.use("/api/videos", videoRoutes);
 
 // middleware
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
 app.use((err,req,res,next)=>{
     const status = err.status || 500;
     const message = err.message;
