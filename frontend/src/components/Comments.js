@@ -48,7 +48,7 @@ const Comments = ({videoId}) => {
 
   dispatch(fetchComments(videoId))
   
-  const comments = useSelector(state=>state.comment.comments);
+  const {comments} = useSelector(state=>state.comment);
  
 
 
