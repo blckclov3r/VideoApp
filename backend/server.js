@@ -55,11 +55,6 @@ if(process.env.NODE_ENV === 'production'){
     app.get('/',(req,res)=>res.send('Please set to production'))
 }
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-});
 
 const PORT = process.env.PORT || 8000;
 mongoose.connect(process.env.MONGO_URI)
