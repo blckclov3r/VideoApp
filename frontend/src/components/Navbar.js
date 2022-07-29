@@ -35,7 +35,7 @@ const Search = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 3px;
   color: ${({ theme }) => theme.text};
 `;

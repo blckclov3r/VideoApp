@@ -4,12 +4,16 @@ const initialState = {
     currentVideo: null,
     loading: false,
     error: false,
+    type: 'random',
 };
 const namespace = 'video';
 export const videoSlice = createSlice({
     initialState,
     name: namespace,
     reducers: {
+        setVideoType: (state,action)=>{
+            state.type = action.payload;
+        },
         fetchStart: (state,action)=>{
             state.loading = true;
         },
@@ -42,6 +46,6 @@ export const videoSlice = createSlice({
     }
 });
 
-export const {fetchStart, fetchSuccess,fetchFailure,like,dislike} = videoSlice.actions;
+export const {fetchStart, fetchSuccess,fetchFailure,like,dislike,setVideoType} = videoSlice.actions;
 export default videoSlice.reducer
 

@@ -1,7 +1,8 @@
 import Card from "../components/Card";
 import styled from "styled-components";
-import { useQuery } from 'react-query'
-import { axiosInstance } from "../config";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setVideoType } from "../features/videoSlice";
 
 const Container = styled.div`
      display: grid;
@@ -10,22 +11,11 @@ const Container = styled.div`
     grid-column-gap: 1rem;
 `
 
-export default function Home({ type='random' }) {
-
-
-  const fetchVideos = async () => {
-    return await axiosInstance.get(`/videos/${type}`)
-      .then(res => res?.data)
-      .catch((err) => {
-        console.log(err?.response?.data?.status);
-      });
-  }
-
-  const { data, isLoading,status} = useQuery(['HOME/FETCHVIDEOS', type], fetchVideos,{
-    refetchOnWindowFocus: false,
-    keepPreviousData: true
-  });
-
+export default function Home({ type='random', data,isLoading,status }) {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(setVideoType(type))
+  },[type,dispatch])
 
   if( status === 401 || status === 'error'){
     return (
@@ -33,7 +23,6 @@ export default function Home({ type='random' }) {
        <h2 style={{color: '#ccc'}}>Something went wrong or Not authenticated</h2>
        <a href="https://facebook.com/blckclov3r" style={{color: "#f1f1f1",textDecoration: 'none'}}>Need help? add me on Facebook @blckclov3r</a>
       </>
-     
     )
   }
 

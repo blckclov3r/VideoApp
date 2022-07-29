@@ -54,9 +54,8 @@ const Comment = ({comment,user}) => {
       <Container>
          <Avatar src={channel?.img || user?.img || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} alt="user" />
       <Details>
-        <Name>
-           {channel?.name || user?.name} <Date>1 day ago</Date>
-        </Name>
+        <Name> {channel?.name || user?.name}  </Name><Date>1 day ago</Date>
+       
         <Text>
           {comment?.desc}
         </Text>

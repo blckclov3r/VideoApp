@@ -14,6 +14,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from "./Layout";
 import NotFound from "./pages/NotFound";
+import { useSelector } from "react-redux";
+import { axiosInstance } from "./config";
+import { useQuery } from "react-query";
 
 const Container = styled.div`
   display: flex;
@@ -31,8 +34,33 @@ const Wrapper = styled.div`
 padding: 22px 2rem;
 `
 
+
+
+
+
 function App() {
+
   const [darkMode, setDarkMode] = useState(true);
+  
+  const type = useSelector(state=>state.video.type);
+
+  const fetchVideos = async () => {
+    return await axiosInstance.get(`/videos/${type}`)
+      .then(res => {
+        return res?.data;
+      })
+      .catch((err) => {
+        console.log(err?.response?.data?.status);
+      });
+  }
+
+  const { data, isLoading,status} = useQuery(['APP/FETCHVIDEOS', type], fetchVideos,{
+    refetchOnWindowFocus: false,
+    keepPreviousData: true
+  });
+
+  console.log(data)
+
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <BrowserRouter>
@@ -47,9 +75,9 @@ function App() {
 
                 <Route path="/" element={<Layout />}>
 
-                  <Route path="/" element={<Home />} />
-                  <Route path="trends" element={<Home type="trend" />} />
-                  <Route path="subscriptions" element={<Home type="sub"  />} />
+                  <Route path="/" element={<Home type='random' data={data} isLoading={isLoading} status={status} />} />
+                  <Route path="trends" element={<Home type="trend" data={data} isLoading={isLoading} status={status} />} />
+                  <Route path="subscriptions" element={<Home type="sub" data={data} isLoading={isLoading} status={status}  />} />
 
                   <Route path="search" element={<Search   />} />
                   <Route path="signin" element={<Signin />} />
@@ -66,7 +94,7 @@ function App() {
       </BrowserRouter>
       
       <ToastContainer
-        position="bottom-right"
+        position="top-right"
         closeOnClick
         newestOnTop={true}
       />

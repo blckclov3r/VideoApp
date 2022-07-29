@@ -85,13 +85,20 @@ const Comments = ({videoId}) => {
     
   }, [videoId,dispatch]);
 
+  const replaceImage = (error) => {
+    //replacement of broken Image
+    error.onerror = "";
+    error.target.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"
+    return true;
+  }
+
   return (
     <>
       { currentUser && 
         <Container>
         <form onSubmit={commentSubmit}>
     <NewComment>
-      <Avatar src={currentUser?.img  || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
+      <Avatar src={currentUser?.img  || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} onError={replaceImage} />
       <Input placeholder="Add a comment..."  value={commentInput} onChange={(e)=>setCommentInput(e.target.value)}/>
 
     </NewComment>
