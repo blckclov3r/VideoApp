@@ -38,7 +38,10 @@ export const signin = async (req,res,next)=>{
        const {password,...others} = user._doc;
 
        res.cookie("access_token",token,{
-        httpOnly: true
+        httpOnly: true,
+        sameSite : "none",
+        secure: true,
+        domain: "https://ytclonevideoapp.herokuapp.com"
        }).status(200).json(others);
      
     } catch (error) {
