@@ -64,7 +64,6 @@ export const googleAuth = async (req,res,next)=>{
         }else{
             const newUser = new User({
                 ...req.body,
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU",
                 fromGoogle: true
             });
             const savedUser = await newUser.save();
