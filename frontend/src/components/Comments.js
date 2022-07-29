@@ -65,8 +65,11 @@ const Comments = ({videoId}) => {
   const commentSubmit = async(e) =>{
     e.preventDefault();
 
+    if(commentInput === ""){
+       return;
+    }
+
     dispatch(createComment({
-        userId: currentUser?._id,
         videoId,
         desc: commentInput
     }));
