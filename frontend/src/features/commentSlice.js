@@ -2,7 +2,7 @@ import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "../config";
 
 const initialState = {
-    comments: [],
+    comments: null,
     status: 'idle'
 }
 
@@ -43,7 +43,7 @@ export const commentSlice = createSlice({
         })
         .addCase(createComment.fulfilled,(state,action)=>{
             state.status = 'idle';
-            state.comments.push(action.payload);
+            state.comments = action.payload;
         })
         .addCase(createComment.rejected,(state,action)=>{
             state.status = 'error';

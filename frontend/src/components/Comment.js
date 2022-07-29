@@ -49,6 +49,7 @@ const Comment = ({comment}) => {
     keepPreviousData: true,
   });
 
+  // console.log(channel)
 
   return (
 

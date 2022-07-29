@@ -33,7 +33,7 @@ export const deleteUser = async(req,res,next)=>{
    }
 }
 
-export const getUser = async(req,res)=>{
+export const getUser = async(req,res,next)=>{
    try {
     const user = await User.findById(req.params.id);
     const {password,...others} = user._doc;
@@ -43,7 +43,7 @@ export const getUser = async(req,res)=>{
    }
 }
 
-export const subscribeUser = async(req,res)=>{
+export const subscribeUser = async(req,res,next)=>{
     try {
         await User.findByIdAndUpdate(req.user.id,{
             $push:{subscribedUsers: req.params.id}
@@ -57,7 +57,7 @@ export const subscribeUser = async(req,res)=>{
     }
 }
 
-export const unsubscribeUser = async(req,res)=>{
+export const unsubscribeUser = async(req,res,next)=>{
     try {
         await User.findByIdAndUpdate(req.user.id,{
             $pull:{subscribedUsers: req.params.id}

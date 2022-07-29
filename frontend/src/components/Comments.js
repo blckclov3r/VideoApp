@@ -1,10 +1,11 @@
 
 import styled from "styled-components";
 import Comment from "./Comment";
-import { useState } from "react";
-import { createComment, fetchComments, setComments } from "../features/commentSlice";
+import { useEffect, useState } from "react";
+// import { createComment, fetchComments, setComments } from "../features/commentSlice";
+import { createComment, fetchComments } from "../features/commentSlice";
 import {useDispatch, useSelector} from 'react-redux'
-
+import { nanoid } from '@reduxjs/toolkit'
 const Container = styled.div``;
 
 const NewComment = styled.div`
@@ -44,12 +45,13 @@ const Comments = ({videoId}) => {
 
   const dispatch = useDispatch();
 
-  dispatch(fetchComments(videoId))
-  
   const {comments} = useSelector(state=>state.comment);
- 
+  
+  useEffect(() => {
+    dispatch(fetchComments(videoId))
+  }, [videoId,dispatch]);
 
-  dispatch(setComments(comments))
+  console.log(currentUser)
 
   const commentSubmit = (e) =>{
     e.preventDefault();
@@ -57,11 +59,24 @@ const Comments = ({videoId}) => {
     if(commentInput === ""){
        return;
     }
+
+  //   dispatch(setComments({
+  //     _id: nanoid(),
+  //     name: currentUser.name,
+  //     img: currentUser.img,
+  //     videoId,
+  //     desc: commentInput
+  //  }))
+
+
     dispatch(createComment({
         videoId,
         desc: commentInput
     }));
-
+    
+   
+  
+    setCommentInput("");
   }
 
 
@@ -77,8 +92,8 @@ const Comments = ({videoId}) => {
       </NewComment>
       <Button type="submit">Comment</Button>
       </form>
-      { comments?.map(comment=>{
-        return <Comment key={comment?._id} comment={comment} />
+      { comments?.map((comment)=>{
+        return <Comment key={nanoid()} comment={comment} />
       })}
   
 
