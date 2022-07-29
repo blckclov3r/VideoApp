@@ -5,7 +5,6 @@ import Comments from "../components/Comments";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import axios from "axios";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -150,14 +149,14 @@ const Video = () => {
   // console.log('currentVideo',currentVideo?.videoUrl)
 
   const handleLike = async() =>{
-    toast.info("Like!")
+    // toast.info("Like!")
     await axiosInstance.put(`/users/like/${currentVideo?._id}`)
     .then((res)=>console.log(res))
     dispatch(like(currentUser?._id));
   }
 
   const handleDislike = async() =>{
-    toast.info("Dislike!")
+    // toast.info("Dislike!")
     await axiosInstance.put(`/users/dislike/${currentVideo?._id}`)
     dispatch(dislike(currentUser?._id));
   }
@@ -167,10 +166,10 @@ const Video = () => {
   const handleSubscribe = async()=>{
     if(currentUser?.subscribedUsers?.includes(channel?._id)){
       toast.info("Unsubscribe!")
-      await axios.put(`/users/unsubscribe/${channel?._id}`).then(res=>console.log(res?.data));
+      await axiosInstance.put(`/users/unsubscribe/${channel?._id}`).then(res=>console.log(res?.data));
     }else{
       toast.info("Subscribe!")
-      await axios.put(`/users/subscribe/${channel?._id}`).then(res=>console.log(res?.data))
+      await axiosInstance.put(`/users/subscribe/${channel?._id}`).then(res=>console.log(res?.data))
     }
     dispatch(subscribe(channel?._id))
   }

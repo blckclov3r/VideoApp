@@ -7,27 +7,18 @@ import videoRoutes from './routes/videos.js'
 import authRoutes from './routes/auth.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-
 import path from 'path';
 import {fileURLToPath} from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-
-// 👇️ "/home/john/Desktop/javascript"
-const __dirname = path.dirname(__filename);
 
 
 dotenv.config();
 
 const app = express();
-app.use(cors());
-
-
+app.use(cors())
 
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
-
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -46,10 +37,15 @@ app.use((err,req,res,next)=>{
     });
 });
 
-console.log(path.join(__dirname,'./../frontend/build'))
-console.log(path.resolve(__dirname, '../frontend/build', 'index.html'))
+
+
+// console.log(path.join(__dirname,'./../frontend/build'))
+// console.log(path.resolve(__dirname, '../frontend/build', 'index.html'))
 
 // serve frontend
+const __filename = fileURLToPath(import.meta.url);
+// 👇️ "/home/john/Desktop/javascript"
+const __dirname = path.dirname(__filename);
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static(path.join(__dirname,'../frontend/build')))
     app.get('/*',(req,res)=>{
@@ -58,6 +54,12 @@ if(process.env.NODE_ENV === 'production'){
 }else{
     app.get('/',(req,res)=>res.send('Please set to production'))
 }
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
 
 const PORT = process.env.PORT || 8000;
 mongoose.connect(process.env.MONGO_URI)
