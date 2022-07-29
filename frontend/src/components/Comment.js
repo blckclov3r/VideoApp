@@ -46,7 +46,7 @@ const Comment = ({comment}) => {
 
   const { data: channel } = useQuery(['COMMENT/FETCHUSER', comment], fetchUser,{
     refetchOnWindowFocus: false,
-    keepPreviousData: true,
+    keepPreviousData: false,
   });
 
   // console.log(channel)

@@ -43,6 +43,7 @@ export const commentSlice = createSlice({
             state.status = 'loading';
         })
         .addCase(createComment.fulfilled,(state,action)=>{
+            console.log('createcomment',action.payload)
             state.status = 'idle';
         })
         .addCase(createComment.rejected,(state,action)=>{
@@ -53,7 +54,7 @@ export const commentSlice = createSlice({
         })
         .addCase(fetchComments.fulfilled,(state,action)=>{
             state.status = 'idle';
-            state.comments = action.payload;
+            state.comments.push(action.payload);
         })
         .addCase(fetchComments.rejected,(state,action)=>{
             state.status = 'error';

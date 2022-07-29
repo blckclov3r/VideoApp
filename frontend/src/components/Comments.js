@@ -44,13 +44,11 @@ const Comments = ({videoId}) => {
 
   const dispatch = useDispatch();
 
-  const {comments} = useSelector(state=>state.comment);
-  
-  useEffect(() => {
 
-    dispatch(fetchComments(videoId))
-    
-  }, [videoId,dispatch]);
+  
+ 
+
+  const {comments} = useSelector(state=>state.comment);
 
   // console.log(currentUser)
 
@@ -67,10 +65,13 @@ const Comments = ({videoId}) => {
         desc: commentInput
     }));
     
+  
+    const {name,img} = currentUser;
+    
     dispatch(setComments({
       _id: nanoid(),
-      name: currentUser.name,
-      img: currentUser.img,
+      name,
+      img,
       videoId,
       desc: commentInput
    }))
@@ -79,7 +80,11 @@ const Comments = ({videoId}) => {
   }
 
 
+  useEffect(() => {
 
+    dispatch(fetchComments(videoId))
+    
+  }, [videoId,dispatch]);
 
   return (
     <Container>
