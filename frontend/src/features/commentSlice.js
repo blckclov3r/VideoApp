@@ -30,7 +30,7 @@ export const commentSlice = createSlice({
         })
         .addCase(createComment.fulfilled,(state,action)=>{
             state.status = 'success';
-            state.comments = action.payload;
+            state.comments.push(action.payload);
         })
         .addCase(createComment.rejected,(state,action)=>{
             state.status = 'error';
