@@ -69,7 +69,6 @@ const Comments = ({videoId}) => {
     const {name,img} = currentUser;
     
     dispatch(setComments({
-      _id: nanoid(),
       name,
       img,
       videoId,
@@ -98,7 +97,7 @@ const Comments = ({videoId}) => {
       </form>
 
       { comments &&  comments?.map((comment)=>{
-        return <Comment key={nanoid()} comment={comment} />
+        return <Comment key={nanoid()} comment={comment} user={currentUser} />
       })}
   
 

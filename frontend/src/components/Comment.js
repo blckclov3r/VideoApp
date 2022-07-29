@@ -36,7 +36,7 @@ const Text = styled.span`
   font-size: 14px;
 `;
 
-const Comment = ({comment}) => {
+const Comment = ({comment,user}) => {
   
 
   const fetchUser = async () =>{
@@ -49,15 +49,13 @@ const Comment = ({comment}) => {
     keepPreviousData: false,
   });
 
-  // console.log(channel)
-
   return (
 
       <Container>
-      <Avatar src={channel && (channel?.img !== undefined) ?  channel?.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
+         <Avatar src={channel?.img || user.img} alt="user" />
       <Details>
         <Name>
-          {channel && (channel?.name !== undefined) ? channel?.name : "Anonymous"} <Date>1 day ago</Date>
+           {channel?.name || user.name} <Date>1 day ago</Date>
         </Name>
         <Text>
           {comment?.desc}

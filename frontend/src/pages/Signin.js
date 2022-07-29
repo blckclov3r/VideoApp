@@ -134,6 +134,7 @@ const SignIn = () => {
       if(res.status === 201){
         dispatch(loginSuccess(res?.data));
         toast.success("Successfully registed!");
+        navigate("/");
       }
     }).catch((err)=>{
       console.log(err);

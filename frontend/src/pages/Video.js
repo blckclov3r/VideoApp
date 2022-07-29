@@ -217,7 +217,7 @@ const Video = () => {
               <ChannelName>{channel && channel?.name}</ChannelName>
               <ChannelCounter>{channel && channel?.subscribers} subscribers</ChannelCounter>
               <Description>
-                {channel && channel?.desc}
+                {/* {currentVideo?.desc} */}
               </Description>
             </ChannelDetail>
           </ChannelInfo>

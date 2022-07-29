@@ -107,7 +107,7 @@ export default function Navbar() {
           <User >
              <VideoCallOutlinedIcon  onClick={handleVideoCall} />
              <Avatar src={user.img ? user.img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} onClick={()=>setLogoutModal(true)}  />
-             {user.name}
+             {user?.name}
           </User>
 
         ) : (

@@ -35,7 +35,7 @@ export const commentSlice = createSlice({
     reducers:{
         setComments: (state,action)=>{
             console.log(action.payload)
-             state.comments = [action.payload,...state.comments];
+            state.comments = [action.payload,...state.comments];
         }
     },
     extraReducers: (builder)=> {

@@ -10,7 +10,13 @@ export const signup = async (req,res,next)=>{
         const hash = bcrypt.hashSync(password, salt);
 
         // updating password to hash
-        const newUser = new User({...req.body,password: hash});
+        const newUser = new User(
+            {
+                ...req.body,
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU",
+                password: hash
+            }
+        );
 
         await newUser.save();
         res.status(201).send('user has been created');
@@ -59,6 +65,7 @@ export const googleAuth = async (req,res,next)=>{
         }else{
             const newUser = new User({
                 ...req.body,
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU",
                 fromGoogle: true
             });
             const savedUser = await newUser.save();
