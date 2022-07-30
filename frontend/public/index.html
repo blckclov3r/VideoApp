@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <base href="/">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VidepApp - Test purposes only!</title>
@@ -14,5 +15,40 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+
+
+  <script>
+    // alternative to DOMContentLoaded
+document.onreadystatechange = function () {
+  if (document.readyState === "interactive" || document.readyState === "complete") {
+    const chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "110129014150984");
+    chatbox.setAttribute("attribution", "biz_inbox");
+
+    window.fbAsyncInit = function () {
+      FB.init({
+        xfbml: true,
+        version: 'v14.0'
+      });
+    };
+
+    (function (d, s, id) {
+      let js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  }
+}
+  </script>
+  <script>
+    window.addEventListener('load',()=>{
+      document.getElementById('backToTop').addEventListener('click',()=>{
+        window.scrollTo(0, -1);
+      })
+    });
+   
+  </script>
 </body>
 </html>

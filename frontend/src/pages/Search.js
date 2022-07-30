@@ -21,11 +21,31 @@ export default function Search() {
         });
       }
 
-    const {data:videos} = useQuery(['SEARCH/FETCHVIDEOS',query],fetchVideos);
+    const {data:videos, isLoading,status} = useQuery(['SEARCH/FETCHVIDEOS',query],fetchVideos,{
+      refetchOnWindowFocus: false,
+    keepPreviousData: true,
+    staleTime: Infinity,
+  cacheTime: Infinity
+    });
+
+    if(  status === 'error'){
+      return (
+        <>
+         <h2 style={{color: '#ccc'}}>Something went wrong</h2>
+         <a href="https://facebook.com/blckclov3r" style={{color: "#f1f1f1",textDecoration: 'none'}}>Need help? add me on Facebook @blckclov3r</a>
+        </>
+      )
+    }
+  
+    if( isLoading){
+      return (
+        <h2 style={{color: '#ccc'}}>Loading...</h2>
+      )
+    }
 
   return (
     <Container>
-    {videos.map(video=>(
+    {videos && videos?.map(video=>(
       <Card key={video._id} video={video}/>
     ))}
   </Container>

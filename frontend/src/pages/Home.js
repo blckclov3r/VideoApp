@@ -1,7 +1,6 @@
 import Card from "../components/Card";
 import styled from "styled-components";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { setVideoType } from "../features/videoSlice";
 
 const Container = styled.div`
@@ -11,8 +10,8 @@ const Container = styled.div`
     grid-column-gap: 1rem;
 `
 
-export default function Home({ type='random', data,isLoading,status }) {
-  const dispatch = useDispatch();
+export default function Home({ type='random', data,isLoading,status,dispatch }) {
+
   useEffect(()=>{
     dispatch(setVideoType(type))
   },[type,dispatch])

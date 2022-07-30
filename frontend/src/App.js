@@ -17,7 +17,7 @@ import NotFound from "./pages/NotFound";
 import { useSelector } from "react-redux";
 import { axiosInstance } from "./config";
 import { useQuery } from "react-query";
-
+import { useDispatch } from "react-redux";
 const Container = styled.div`
   display: flex;
   flex-direction: row;
@@ -39,7 +39,7 @@ padding: 22px 2rem;
 
 
 function App() {
-
+  const dispatch = useDispatch();
   const [darkMode, setDarkMode] = useState(true);
   
   const type = useSelector(state=>state.video.type);
@@ -56,10 +56,12 @@ function App() {
 
   const { data, isLoading,status} = useQuery(['APP/FETCHVIDEOS', type], fetchVideos,{
     refetchOnWindowFocus: false,
-    keepPreviousData: true
+    keepPreviousData: true,
+    staleTime: Infinity,
+  cacheTime: Infinity
   });
 
-  console.log(data)
+
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
@@ -75,9 +77,9 @@ function App() {
 
                 <Route path="/" element={<Layout />}>
 
-                  <Route path="/" element={<Home type='random' data={data} isLoading={isLoading} status={status} />} />
-                  <Route path="trends" element={<Home type="trend" data={data} isLoading={isLoading} status={status} />} />
-                  <Route path="subscriptions" element={<Home type="sub" data={data} isLoading={isLoading} status={status}  />} />
+                  <Route path="/" element={<Home type='random' data={data} isLoading={isLoading} status={status} dispatch={dispatch} />} />
+                  <Route path="trends" element={<Home type="trend" data={data} isLoading={isLoading} status={status} dispatch={dispatch}  />} />
+                  <Route path="subscriptions" element={<Home type="sub" data={data} isLoading={isLoading} status={status} dispatch={dispatch}   />} />
 
                   <Route path="search" element={<Search   />} />
                   <Route path="signin" element={<Signin />} />
