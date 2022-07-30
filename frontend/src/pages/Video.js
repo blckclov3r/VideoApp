@@ -112,8 +112,6 @@ const Subscribe = styled.button`
   cursor: pointer;
 `;
 
-
-
 const Video = () => {
   
   const {currentVideo} = useSelector(state=>state.video);
@@ -129,15 +127,13 @@ const Video = () => {
  
     const fetchData = async ()=>{
       try {
-
-        await axiosInstance.put(`/videos/view/${path}`)
-
+  
         const videoRes = await axiosInstance.get(`/videos/find/${path}`);
-
         const channelRes = await axiosInstance.get(`/users/find/${videoRes?.data.userId}`)
         dispatch(fetchSuccess(videoRes?.data))
         setChannel(channelRes?.data)
-   
+        
+        await axiosInstance.put(`/videos/view/${path}`)
       } catch (error) {
         console.log(error);
       }
@@ -177,7 +173,6 @@ const Video = () => {
     }
     dispatch(subscribe(channel?._id))
   }
-
 
 
   
@@ -227,7 +222,9 @@ const Video = () => {
           <Subscribe onClick={channel && handleSubscribe}>{currentUser && currentUser?.subscribedUsers?.includes(channel?._id) ? 'UNSBSCRIBE' : 'SUBSCRIBE' }</Subscribe>
         </Channel>
         <Hr />
-        {currentVideo && <Comments videoId={currentVideo?._id} /> }
+
+        <Comments videoId={currentVideo?._id} /> 
+        
       </Content>
       <Recommendation tags={currentVideo?.tags} />
     </Container>

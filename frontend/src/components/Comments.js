@@ -45,9 +45,6 @@ const Comments = ({videoId}) => {
   const dispatch = useDispatch();
 
 
-  
- 
-
   const {comments} = useSelector(state=>state.comment);
 
   // console.log(currentUser)
@@ -80,9 +77,7 @@ const Comments = ({videoId}) => {
 
 
   useEffect(() => {
-
     dispatch(fetchComments(videoId))
-    
   }, [videoId,dispatch]);
 
   const replaceImage = (error) => {
@@ -94,9 +89,11 @@ const Comments = ({videoId}) => {
 
   return (
     <>
-      { currentUser && 
+    
         <Container>
-        <form onSubmit={commentSubmit}>
+
+          { currentUser &&
+               <form onSubmit={commentSubmit}>
     <NewComment>
       <Avatar src={currentUser?.img  || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} onError={replaceImage} />
       <Input placeholder="Add a comment..."  value={commentInput} onChange={(e)=>setCommentInput(e.target.value)}/>
@@ -104,6 +101,8 @@ const Comments = ({videoId}) => {
     </NewComment>
     <Button type="submit">Comment</Button>
     </form>
+          }
+     
 
     { comments &&  comments?.map((comment)=>{
       return <Comment key={nanoid()} comment={comment} user={currentUser} />
@@ -111,7 +110,6 @@ const Comments = ({videoId}) => {
 
 
   </Container>
-      }
     </>
   );
 };

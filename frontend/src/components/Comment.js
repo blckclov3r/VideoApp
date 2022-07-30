@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { axiosInstance } from "../config";
 import {useQuery} from 'react-query'
+import { formatDistance } from "date-fns";
 
 const Container = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ const Name = styled.span`
   font-weight: 500;
 `;
 
-const Date = styled.span`
+const DateStyle = styled.span`
   font-size: 12px;
   font-weight: 400;
   color: ${({ theme }) => theme.textSoft};
@@ -49,13 +50,18 @@ const Comment = ({comment,user}) => {
     keepPreviousData: false,
   });
 
+
+
+const timestamp = comment.createdAt ? new Date(comment.createdAt) : "";
+const distance = formatDistance(Date.now(), timestamp, {addSuffix: true });
+
   return (
 
       <Container>
          <Avatar src={channel?.img || user?.img || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} alt="user" />
       <Details>
-        <Name> {channel?.name || user?.name}  </Name><Date>1 day ago</Date>
-       
+        <Name> {channel?.name || user?.name}  <DateStyle>{distance.substring(distance.indexOf(distance.match(/\d+/g)))}</DateStyle> </Name>
+   
         <Text>
           {comment?.desc}
         </Text>

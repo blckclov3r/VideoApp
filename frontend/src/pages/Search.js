@@ -28,7 +28,7 @@ export default function Search() {
   cacheTime: Infinity
     });
 
-    if(  status === 'error'){
+    if(status === 'error'){
       return (
         <>
          <h2 style={{color: '#ccc'}}>Something went wrong</h2>
@@ -43,11 +43,16 @@ export default function Search() {
       )
     }
 
+
+
   return (
     <Container>
-    {videos && videos?.map(video=>(
+
+    {!isLoading && videos?.map(video=>(
       <Card key={video._id} video={video}/>
     ))}
+
+   
   </Container>
   )
 }

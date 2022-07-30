@@ -34,6 +34,7 @@ import {
   
 export const store = configureStore({
   reducer: persistedReducer,
+  devTools: false,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
