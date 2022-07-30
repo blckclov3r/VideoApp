@@ -144,11 +144,19 @@ export const Upload = ({ setOpen }) => {
       }, [image]);
     
       const handleUpload = async ()=>{
-        console.log(inputs)
-        const res = await axiosInstance.post("/videos", {...inputs, tags})
-        console.log('res ====>',res)
-        setOpen(false)
-        res.status===200 && navigate(`/video/${res.data._id}`)
+        console.log(JSON.stringify(inputs, undefined, 4));
+
+        await axiosInstance.post("/videos", {...inputs, tags}).then((res)=>{
+            if(res.status===200){
+                navigate(`/video/${res.data._id}`);
+                setOpen(false)
+            }
+         
+            console.log(res?.data);
+        }).catch((err)=>{
+            console.log('upload',err);
+        })
+     
       }
 
     return (

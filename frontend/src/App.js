@@ -57,8 +57,8 @@ function App() {
   const { data, isLoading,status} = useQuery(['APP/FETCHVIDEOS', type], fetchVideos,{
     refetchOnWindowFocus: false,
     keepPreviousData: true,
-    staleTime: Infinity,
-  cacheTime: Infinity
+    // staleTime: Infinity,
+    // cacheTime: Infinity
   });
 
 
