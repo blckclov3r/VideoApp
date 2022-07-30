@@ -210,7 +210,7 @@ const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src={channel && channel?.img} />
+            <Image src={channel?.img || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
             <ChannelDetail>
               <ChannelName>{channel && channel?.name}</ChannelName>
               <ChannelCounter>{channel && channel?.subscribers} subscribers</ChannelCounter>

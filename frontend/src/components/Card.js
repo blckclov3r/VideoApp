@@ -81,7 +81,7 @@ export default function Card({type,video}) {
         <Container type={type}>
                 <Image src={video?.imgUrl} alt="Video" onError={replaceImage} />
                 <Details type={type}>
-                    <ChannelImage src={channel?.img} />
+                    <ChannelImage src={channel?.img || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-SJEWBFE4t685cgNnpxFumHYvUWk_Z71-A&usqp=CAU"} />
                     <Texts>
                 <Title>{video?.title}</Title>
                 <ChannelName>{channel?.name}</ChannelName>
