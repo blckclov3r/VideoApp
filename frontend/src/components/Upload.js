@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import app from "../firebase";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from '../config';
 
 const Container = styled.div`
     width: 100%;
@@ -122,7 +122,9 @@ export const Upload = ({ setOpen }) => {
                 break;
             }
           },
-          (error) => {},
+          (error) => {
+            console.log('error',error);
+          },
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                 setInputs((prev) => {
@@ -142,8 +144,8 @@ export const Upload = ({ setOpen }) => {
       }, [image]);
     
       const handleUpload = async ()=>{
-        
-        const res = await axios.post("/videos", {...inputs, tags})
+        console.log(inputs)
+        const res = await axiosInstance.post("/videos", {...inputs, tags})
         console.log('res ====>',res)
         setOpen(false)
         res.status===200 && navigate(`/video/${res.data._id}`)
